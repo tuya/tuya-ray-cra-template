@@ -1,0 +1,28 @@
+{
+  "name": "simple-app",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "@ray/cli": "^0.1.0",
+    "@types/react": "^17.0.24",
+    "@types/react-dom": "^17.0.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack-chain": "^6.5.1"
+  },
+  "dependencies": {
+    "@ray/components": "^0.1.0",
+    "@ray/framework": "^0.1.0",
+    "@ray/types": "^0.1.0"
+  },
+  "scripts": {
+    "build:tuya": "ray build --target=tuya",
+    "build:wechat": "ray build --target=wechat",
+    "build:web": "ray build --target=web",
+    "build:native": "ray build --target=native",
+    "start:tuya": "ray start --target=tuya",
+    "start:wechat": "ray start --target=wechat",
+    "start:web": "ray start --target=web",
+    "start:native": "ray start --target=native"
+  }
+}
