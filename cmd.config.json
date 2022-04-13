@@ -1,0 +1,10 @@
+[
+  {
+    "name": "App 通用的 Ray 应用",
+    "value": "app"
+  },
+  {
+    "name": "App 面板开发 Ray 应用",
+    "value": "ray-panel"
+  }
+]
