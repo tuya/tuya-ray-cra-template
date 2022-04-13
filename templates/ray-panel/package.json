@@ -20,6 +20,7 @@
     "@ray/location-native": "^0.2.1",
     "@ray/panel-components": "^0.2.1",
     "@ray/ray-panel-wrapper": "^0.2.1",
+    "@ray/ray-components-plus": "^0.0.11",
     "@ray/ray-panel-standard-hoc": "^0.2.1",
     "@tuya-rn/BaseKit": "^2.0.8",
     "@tuya-rn/DeviceKit": "^2.0.11",
