@@ -1,9 +1,4 @@
-import { getOssUrl, getUiIdI18N, getDeviceThingDataSource } from '@/api';
-import { Connect } from '@/components';
 import { Text } from '@ray/components';
-import defaultUiConfig from '@/config/panelConfig/iot';
-import { actions, store } from '@/redux';
-import { ReduxState } from '@/redux/store';
 import _ from 'lodash';
 import { detailedDiff } from 'deep-object-diff';
 import React, { Component } from 'react';
@@ -13,6 +8,11 @@ import { Strings } from '@ray/ray-panel-i18n';
 import { Theme } from '@ray/ray-panel-theme';
 import { JsonUtils } from '@ray/ray-panel-utils';
 import { CloudConfig, Config, withConfig } from '@ray/ray-panel-standard-hoc';
+import { ReduxState } from '@/redux/store';
+import { actions, store } from '@/redux';
+import defaultUiConfig from '@/config/panelConfig/iot';
+import { Connect } from '@/components';
+import { getOssUrl, getUiIdI18N, getDeviceThingDataSource } from '@/api';
 import { thingDpType } from '@/constant';
 
 const { parseJSON } = JsonUtils;
@@ -39,7 +39,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
 
   const onInit = (devInfo: DevInfo) => {
     try {
-      getOssUrl().then((staticPrefix) => dispatch(actions.common.initStaticPrefix(staticPrefix)));
+      getOssUrl().then(staticPrefix => dispatch(actions.common.initStaticPrefix(staticPrefix)));
       dispatch(actions.common.updateMiscConfig({ hasSwitch: !!devInfo.schema.switch }));
     } catch (error) {
       console.warn('onApplyConfig Failed :>> ', error);
@@ -59,7 +59,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
       const showSchedule = !!bicConfigMap?.timer?.selected;
       dispatch(actions.common.initBicConfig(bicConfigMap));
       const { timestamp, ...dpFun } = config.dpFun || {};
-      const funConfig = _.mapValues(dpFun, (value) => parseJSON(value));
+      const funConfig = _.mapValues(dpFun, value => parseJSON(value));
       dispatch(actions.common.initFunConfig({ ...funConfig, raw: config.dpFun }));
       dispatch(actions.common.updateMiscConfig({ ...config.misc, showSchedule }));
       dispatch(actions.common.initializedConfig());
@@ -68,7 +68,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
     }
   };
 
-  const NavigatorLayout: React.FC<Props> = (p) => {
+  const NavigatorLayout: React.FC<Props> = p => {
     return (
       <Connect mapStateToProps={_.identity}>
         {({ mapStateToProps, ...props }: ConnectedProps) => {
@@ -92,7 +92,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
   const TYDevice = TYSdk.device;
   const TYEvent = TYSdk.event;
 
-  TYEvent.on('deviceDataChange', (data) => {
+  TYEvent.on('deviceDataChange', data => {
     switch (data.type) {
       case 'dpData':
         dispatch(actions.common.responseUpdateDp(data.payload as any));
@@ -119,8 +119,8 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
     dispatch(actions.common.updateThingModel(message));
   });
 
-  const initThingModel = (devId) => {
-    getDeviceThingDataSource().then((data) => {
+  const initThingModel = devId => {
+    getDeviceThingDataSource().then(data => {
       dispatch(actions.common.initThingModel(data));
     });
     // 订阅接受物模型推送消息
@@ -135,7 +135,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
       success: () => {
         console.log('subscribeDeviceRemoved 调用成功');
         // 监听删除设备事件
-        ty.device.onDeviceRemoved((body) => {
+        ty.device.onDeviceRemoved(body => {
           console.log('OnDeviceRemoved 调用成功', body);
           // 退出小程序容器
           ty.exitMiniProgram();
@@ -195,7 +195,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
 
       if (props && props.devInfo && props.devInfo.devId) {
         TYDevice.setDeviceInfo(props.devInfo);
-        TYDevice.getDeviceInfo().then((data) => {
+        TYDevice.getDeviceInfo().then(data => {
           dispatch(actions.common.devInfoChange(data));
           data.devId && initThingModel(data.devId);
         });
@@ -203,7 +203,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
         // do something
       } else {
         TYDevice.getDeviceInfo()
-          .then((data) => {
+          .then(data => {
             dispatch(actions.common.devInfoChange(data));
             data.devId && initThingModel(data.devId);
           })
@@ -226,7 +226,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
     applySubUiIDAddedI18N() {
       const { devInfo } = this.props;
       console.warn('检测到当前项目为二级页面开始获取当前项目 UIID 多语言');
-      getUiIdI18N(devInfo.uiId).then((data) => {
+      getUiIdI18N(devInfo.uiId).then(data => {
         console.log('多语言获取成功：', data);
         const diff = detailedDiff(TYSdk.native.lang, data) as {
           added: Record<string, unknown>;

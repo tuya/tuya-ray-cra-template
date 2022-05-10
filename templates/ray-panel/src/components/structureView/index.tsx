@@ -11,14 +11,21 @@ import MenuView from '../menuView';
 const { parseToStyle } = ThemeUtils;
 
 export default function StructureView(props: IStructureViewProps): JSX.Element | null {
-  const { bg_color, bg_width, bg_singRadius, bg_padding, style, structureSource, title_name } =
-    props;
+  const {
+    bg_color,
+    bg_width,
+    bg_singRadius,
+    bg_padding,
+    style,
+    structureSource,
+    title_name,
+  } = props;
   if (!structureSource || !structureSource.length) return null;
 
   const getDpPayload = () => {
     const payloadValues = Object.values(structureSource);
     const payload = {};
-    payloadValues.forEach((value) => {
+    payloadValues.forEach(value => {
       const { key, param_value } = value;
       payload[key] = param_value;
     });
@@ -42,7 +49,7 @@ export default function StructureView(props: IStructureViewProps): JSX.Element |
             bg_width={bg_width}
             bg_singRadius={bg_singRadius}
             bg_padding={bg_padding}
-            onChange={(event) => _handleClick(event, item.key)}
+            onChange={event => _handleClick(event, item.key)}
           />
         );
       case 'value':
@@ -54,7 +61,7 @@ export default function StructureView(props: IStructureViewProps): JSX.Element |
             bg_width={bg_width}
             bg_singRadius={bg_singRadius}
             bg_padding={bg_padding}
-            onChange={(event) => _handleClick(event, item.key)}
+            onChange={event => _handleClick(event, item.key)}
           />
         );
       case 'string':
@@ -66,7 +73,7 @@ export default function StructureView(props: IStructureViewProps): JSX.Element |
             bg_width={bg_width}
             bg_singRadius={bg_singRadius}
             bg_padding={bg_padding}
-            onConfirm={(event) => _handleClick(event, item.key)}
+            onConfirm={event => _handleClick(event, item.key)}
           />
         );
       case 'enum':
@@ -78,7 +85,7 @@ export default function StructureView(props: IStructureViewProps): JSX.Element |
             bg_width={bg_width}
             bg_singRadius={bg_singRadius}
             bg_padding={bg_padding}
-            onChange={(event) => _handleClick(event, item.key)}
+            onChange={event => _handleClick(event, item.key)}
           />
         );
       case 'raw':
@@ -90,7 +97,7 @@ export default function StructureView(props: IStructureViewProps): JSX.Element |
             bg_width={bg_width}
             bg_singRadius={bg_singRadius}
             bg_padding={bg_padding}
-            onConfirm={(event) => _handleClick(event, item.key)}
+            onConfirm={event => _handleClick(event, item.key)}
           />
         );
       default:

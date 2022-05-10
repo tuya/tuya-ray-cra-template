@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line import/no-unresolved
 import 'ray';
 import { RayAppWrapper } from '@ray/ray-panel-wrapper';
 import composeLayout from './composeLayout';

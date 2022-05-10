@@ -10,14 +10,14 @@ function withLogic(Comp): React.ReactNode {
   function LogicComp(props: { thingModelDp: ThingAction; devId: string }) {
     const { thingModelDp, devId } = props;
     const { code, inputParams } = props.thingModelDp;
-    const showModal = useSelector((state) => state.showModal);
+    const showModal = useSelector(state => state.showModal);
     // 过滤掉
-    const filterFaultOrTime = (params) => {
+    const filterFaultOrTime = params => {
       // 过滤掉时间型&故障型
-      return params.filter((p) => p?.typeSpec?.type !== 'date' && p?.typeSpec?.type !== 'bitmap');
+      return params.filter(p => p?.typeSpec?.type !== 'date' && p?.typeSpec?.type !== 'bitmap');
     };
 
-    const handleChange = (data) => {
+    const handleChange = data => {
       console.log('action handleChange', data);
       const params = {};
       data.forEach((d: { code: string | number; value: any }) => {
@@ -44,7 +44,7 @@ function withLogic(Comp): React.ReactNode {
     const getValueList = () => {
       const { outputParams } = thingModelDp;
       const list = [];
-      outputParams.forEach((params) => {
+      outputParams.forEach(params => {
         const { typeSpec } = params;
         let value;
         if (typeSpec?.type === 'value') {

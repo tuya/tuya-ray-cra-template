@@ -50,7 +50,7 @@ class ShowTime extends Component<IProps> {
         }}
       >
         <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <Image src={rect} mode='aspectFill' style={{ width: '28rpx', height: '28rpx' }} />
+          <Image src={rect} mode="aspectFill" style={{ width: '28rpx', height: '28rpx' }} />
           <Text
             style={{
               marginLeft: '24rpx',

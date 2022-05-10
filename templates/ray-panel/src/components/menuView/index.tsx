@@ -37,7 +37,7 @@ export default class NumberView extends React.Component<IMenuViewProps, IMenuVie
             activeValue: item,
           });
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }
@@ -128,7 +128,7 @@ export default class NumberView extends React.Component<IMenuViewProps, IMenuVie
 
               return (
                 <Button
-                  type='primary'
+                  type="primary"
                   key={`${item}-menu`}
                   style={{
                     backgroundColor: active ? button_bg_color_active : button_bg_color_unactive,

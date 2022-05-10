@@ -9,7 +9,7 @@ const { putDeviceData } = TYSdk.device;
 /**
  * epics
  */
-const dpUpdateEpic$ = (action$) => {
+const dpUpdateEpic$ = action$ => {
   return action$.pipe(
     ofType(updateDp.toString()),
     mergeMap((action: { payload: any }) => {

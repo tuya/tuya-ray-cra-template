@@ -1,19 +1,19 @@
 import React from 'react';
 import _ from 'lodash';
 import { View, ScrollView, Modal, Motion, Text } from '@ray/components';
+import { TYSdk } from '@ray/ray-panel-core';
+import { setNavigationBarTitle } from '@ray/api';
+import { Notification } from '@ray/ray-components-plus';
 import { CompList } from '@/components';
 import { useSelector } from '@/redux';
 import { scaleNumber, transformData } from '@/utils';
-import { TYSdk } from '@ray/ray-panel-core';
 import Strings from '@/i18n';
 import NotifyPng from '@/res/notify.png';
-import { setNavigationBarTitle } from '@ray/api';
-import { Notification } from '@ray/ray-components-plus';
 import mode from '../../res/mode.png';
 
 export default function Home() {
-  const thingModel = useSelector((state) => state.thingModel);
-  const devInfo = useSelector((state) => state.devInfo);
+  const thingModel = useSelector(state => state.thingModel);
+  const devInfo = useSelector(state => state.devInfo);
   // 最多显示 4 个故障弹框
   const [show, setShow] = React.useState([true, true, true, true]);
   const { services = [] } = thingModel;
@@ -31,7 +31,7 @@ export default function Home() {
       return label.map((item, idx) => {
         if (labelValueArr[idx] === '1') {
           return (
-            <Modal position='top' overlay={false} show={show[idx]}>
+            <Modal position="top" overlay={false} show={show[idx]}>
               <Motion.PushDown
                 show={show[idx]}
                 style={{
@@ -40,7 +40,7 @@ export default function Home() {
                 }}
               >
                 <Notification
-                  icon='warning'
+                  icon="warning"
                   onClose={() => {
                     const newShow = [...show];
                     newShow[idx] = false;
@@ -81,9 +81,9 @@ export default function Home() {
       }}
     >
       {_.flatten(
-        services.map((service) => {
+        services.map(service => {
           const { properties = [], actions = [], events = [] } = service;
-          const propertiesComp = properties.map((property) => {
+          const propertiesComp = properties.map(property => {
             const {
               accessMode,
               code,
@@ -160,7 +160,7 @@ export default function Home() {
               </View>
             );
           });
-          const actionsComp = actions.map((action) => {
+          const actionsComp = actions.map(action => {
             const { abilityId, code } = action;
             const element = CompList?.action;
             if (!element) {
@@ -185,7 +185,7 @@ export default function Home() {
               </View>
             );
           });
-          const eventComp = events.map((event) => {
+          const eventComp = events.map(event => {
             const { abilityId, code } = event;
             const element = CompList?.event;
             if (!element) {

@@ -89,13 +89,13 @@ const thingModel = handleActions(
         return state;
       }
       const { services = [] } = state;
-      const newServices = services.map((service) => {
+      const newServices = services.map(service => {
         const { properties = [], actions: actionsModel = [], events = [] } = service;
         if (type === thingDpType.prop) {
           const data = payload;
           const newProperties = _.assign([], properties);
 
-          _.keys(data).forEach((key) => {
+          _.keys(data).forEach(key => {
             properties.some((prop, index) => {
               if (prop.code === key) {
                 _.set(newProperties[index], 'value', data[key]?.value);
@@ -114,7 +114,7 @@ const thingModel = handleActions(
           const newAction = _.assign([], actionsModel);
           actionsModel.some((actionItem, index) => {
             if (actionItem.code === actionCode) {
-              const newOutputParams = actionItem.outputParams.map((params) => {
+              const newOutputParams = actionItem.outputParams.map(params => {
                 if (_.keys(data?.outputParams || {}).includes(params.code)) {
                   return _.merge(params, { value: data?.outputParams?.[params.code] });
                 }
@@ -135,7 +135,7 @@ const thingModel = handleActions(
           const newEvent = _.assign([], events);
           events.some((eventItem, index) => {
             if (eventItem.code === eventCode) {
-              const newOutputParams = eventItem.outputParams.map((params) => {
+              const newOutputParams = eventItem.outputParams.map(params => {
                 if (_.keys(data?.outputParams || {}).includes(params.code)) {
                   return _.merge(params, { value: data?.outputParams?.[params.code] });
                 }
@@ -223,7 +223,7 @@ const panelConfig = handleActions(
         },
       };
     },
-    [initializedConfig.toString()]: (state) => {
+    [initializedConfig.toString()]: state => {
       return {
         ...state,
         initialized: true,
@@ -265,7 +265,7 @@ let isSend = false;
 
 const logs = handleActions<Logs, undefined | UpdateDpStatePayload | DevInfo>(
   {
-    [consoleChange.toString()]: (state) => {
+    [consoleChange.toString()]: state => {
       isSend = true;
       return state;
     },

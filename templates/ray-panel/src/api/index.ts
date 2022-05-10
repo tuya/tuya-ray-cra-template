@@ -7,9 +7,9 @@ export const getOssUrl = () => {
       api: 'tuya.m.app.panel.url.get',
       version: '1.0',
       postData: {},
-      success: (response) => resolve(response),
-      fail: (error) => reject(error),
-      complete: (result) => {
+      success: response => resolve(response),
+      fail: error => reject(error),
+      complete: result => {
         console.log('apiRequestByAtop', 'tuya.m.app.panel.url.get', result);
       },
     });
@@ -23,11 +23,11 @@ export const getUiIdI18N = (uiId: string): Promise<Record<string, any>> => {
       api: 'tuya.m.ui.i18n.info.get',
       postData: { uiId },
       version: '1.0',
-      success: (response) => {
+      success: response => {
         typeof response === 'string' ? resolve(JSON.parse(response)) : resolve(response);
       },
-      fail: (error) => reject(error),
-      complete: (result) => {
+      fail: error => reject(error),
+      complete: result => {
         console.log('apiRequestByAtop', 'tuya.m.ui.i18n.info.get', result);
       },
     });
@@ -37,7 +37,7 @@ export const getUiIdI18N = (uiId: string): Promise<Record<string, any>> => {
 // 获取物模型信息
 export const getDeviceThingDataSource = (): Promise<any> => {
   return new Promise((resolve, reject) => {
-    TYSdk.device.getDeviceInfo().then((deviceInfo) => {
+    TYSdk.device.getDeviceInfo().then(deviceInfo => {
       const { devId, dps } = deviceInfo;
       ty.device.getDeviceThingModelInfo({
         devId,
@@ -49,11 +49,11 @@ export const getDeviceThingDataSource = (): Promise<any> => {
           }
           if (services && services.length > 0) {
             const newServices = [];
-            services.forEach((service) => {
+            services.forEach(service => {
               const { properties, events, actions } = service;
               let modifiedProperties = properties.concat();
               if (properties && properties.length > 0) {
-                modifiedProperties = properties.map((property) => {
+                modifiedProperties = properties.map(property => {
                   const { abilityId } = property;
                   return {
                     ...property,
@@ -91,7 +91,7 @@ export const publishPropertyDpData = (payload: { [key: string]: any }): Promise<
         console.log('publishThingModelMessage 调用成功');
         resolve();
       },
-      fail: (error) => {
+      fail: error => {
         console.warn('publishThingModelMessage 调用失败');
         reject(error);
       },
@@ -115,7 +115,7 @@ export const publishActionDpData = (payload: {
         console.log('publishThingModelMessage 调用成功');
         resolve();
       },
-      fail: (error) => {
+      fail: error => {
         console.warn('publishThingModelMessage 调用失败');
         reject(error);
       },

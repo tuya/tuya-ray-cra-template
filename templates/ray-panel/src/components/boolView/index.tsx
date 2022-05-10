@@ -37,7 +37,7 @@ export default class BoolView extends React.Component<IBoolViewProps, IBoolViewS
             switchValue: value,
           });
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }

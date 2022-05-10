@@ -48,7 +48,7 @@ export default class NumberView extends React.Component<INumberViewProps, INumbe
             sliderValue: newValue,
           });
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }

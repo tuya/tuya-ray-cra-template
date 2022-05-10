@@ -1,8 +1,8 @@
+import { get } from 'lodash';
 import { useSelector as useSelectorBase, shallowEqual } from 'react-redux';
 import { actions as CommonActions } from './actions/common';
 import { actions as theme } from './actions/theme';
 import { store, ReduxState } from './store';
-import { get } from 'lodash';
 
 const { width, height } = { width: 375, height: 664 };
 const actions = {
@@ -179,12 +179,12 @@ export function useSelector<TSelected>(
 }
 
 export function useIoTUIValue(key: string, value?: string): string {
-  const iotConfig = useSelector((state) => state.panelConfig.iot);
+  const iotConfig = useSelector(state => state.panelConfig.iot);
   return getUIValue(iotConfig, key, value);
 }
 
 export function useIoTOtherUIValue(key: string, value?: string): string {
-  const iotConfig = useSelector((state) => state.panelConfig.iot);
+  const iotConfig = useSelector(state => state.panelConfig.iot);
   return getOtherUIValue(iotConfig, key, value);
 }
 
