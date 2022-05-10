@@ -24,4 +24,4 @@ npm init @ray/app my-app
 For more information, please refer to:
 - [About Ray](https://developer.tuya.com/cn/ray)
 - [Getting Started](https://developer.tuya.com/cn/ray/guide/tutorial/start) – How to create a new app.
-- [User Guide](https://developer.tuya.com/cn/ray/guide) – How to develop apps bootstrapped with Create Ray App.
+- [User Guide](https://developer.tuya.com/cn/ray/guide) – How to develop apps bootstrapped with `Create Ray App`.
