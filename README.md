@@ -7,18 +7,18 @@ This is the official TypeScript templates for [`Create Ray App`](https://develop
 
 How to use the templates when creating a new app?
 
-For example:
+For examples:
 
 ```sh
 npx @ray-js/create-app my-app
-
-# or
-
+```
+or
+```sh
 yarn create @ray-js/app my-app
-
-# or
-
-npm init @ray/app my-app
+```
+or
+```sh
+npm init @ray-js/app my-app
 ```
 
 For more information, please refer to:

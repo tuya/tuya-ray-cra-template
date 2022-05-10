@@ -11,14 +11,14 @@
 
 ```sh
 npx @ray-js/create-app my-app
-
-# or
-
+```
+或
+```sh
 yarn create @ray-js/app my-app
-
-# or
-
-npm init @ray/app my-app
+```
+或
+```sh
+npm init @ray-js/app my-app
 ```
 
 更多信息，请访问以下链接
