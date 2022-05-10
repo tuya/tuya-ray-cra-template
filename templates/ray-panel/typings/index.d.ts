@@ -1,3 +1,5 @@
+declare module '*.png';
+
 declare module '*.module.less' {
   const classes: {
     readonly [key: string]: string;
@@ -38,9 +40,9 @@ type RequestParams = {
   complete?: (successRes: RequestRes) => void;
 };
 
-export type DpType = 'bool' | 'value' | 'enum' | 'raw' | 'string' | 'bitmap';
+type DpType = 'bool' | 'value' | 'enum' | 'raw' | 'string' | 'bitmap';
 
-export interface DpSchema {
+interface DpSchema {
   code: string;
   dptype: string;
   iconname: string;
@@ -82,9 +84,10 @@ export interface DpSchema {
   unit?: string | undefined;
 }
 
-export type NetworkType = 'WIFI' | 'GPRS' | 'BLE' | 'NONE';
+type NetworkType = 'WIFI' | 'GPRS' | 'BLE' | 'NONE';
 
-export type DpValue = boolean | number | string;
+type DpValue = boolean | number | string;
+
 // eslint-disable-next-line no-shadow
 declare enum DpType {
   property,
