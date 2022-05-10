@@ -1,3 +1,7 @@
 module.exports = {
-  extends: ['tuya-panel']
+  extends: ['tuya-panel'],
+  rules: {
+    camelcase: 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
+  },
 };
