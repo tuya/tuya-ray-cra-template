@@ -31,7 +31,7 @@ type TTTCommonErrorCode = GetTTTFailData<typeof ty.device.getDeviceInfo>;
 /**
  * 设备信息
  */
-type DevInfo = GetTTTAllParams<typeof ty.device.getDeviceInfo>;
+type DevInfo = ty.device.DeviceInfo;
 
 /**
  * 设备物模型信息

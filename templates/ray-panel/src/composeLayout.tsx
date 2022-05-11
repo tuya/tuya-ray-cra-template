@@ -40,6 +40,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
   const onInit = (devInfo: DevInfo) => {
     try {
       getOssUrl().then(staticPrefix => dispatch(actions.common.initStaticPrefix(staticPrefix)));
+      // @ts-expect-error
       dispatch(actions.common.updateMiscConfig({ hasSwitch: !!devInfo.schema.switch }));
     } catch (error) {
       console.warn('onApplyConfig Failed :>> ', error);
@@ -104,7 +105,8 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
   });
 
   // 监听物模型消息推送
-  ty.device.onReceivedThingModelMessage((body: string) => {
+  ty.device.onReceivedThingModelMessage(body => {
+    // @ts-expect-error
     console.log('OnReceivedThingModelMessageBody 调用成功', JSON.parse(body));
     const message = typeof body === 'string' ? JSON.parse(body) : body;
     // 事件弹窗

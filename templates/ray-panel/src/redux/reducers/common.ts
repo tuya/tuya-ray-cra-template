@@ -8,24 +8,24 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/partition';
-import { TYSdk } from '@ray/ray-panel-core';
+// import { TYSdk } from '@ray/ray-panel-core';
 import { thingDpType } from '@/constant';
-
 import { actions } from '../actions/common';
+
 const {
   devInfoChange,
   deviceChange,
   responseUpdateDp,
-  updateDp,
+  // updateDp,
   initStaticPrefix,
   initIoTConfig,
   initFunConfig,
   initBicConfig,
   updateMiscConfig,
   initializedConfig,
-  updateAppTheme,
-  consoleChange,
-  clearConsole,
+  // updateAppTheme,
+  // consoleChange,
+  // clearConsole,
   initThingModel,
   updateThingModel,
   toggleShowModel,
@@ -39,21 +39,12 @@ interface DpState {
   [dpCode: string]: DpValue;
 }
 
-interface Log {
-  strCodes: string;
-  strIds: string;
-  time: string;
-  isSend: boolean;
-}
-
-type Logs = Array<Log>;
-
 type UpdateDpStatePayload = Partial<DpState> & { [key: string]: DpValue };
 
 /**
  * reducers
  */
-const dpState = handleActions(
+const dpState = handleActions<DpState, UpdateDpStatePayload>(
   {
     [devInfoChange.toString()]: (state, action: Actions['devInfoChange']) => {
       return {
@@ -62,26 +53,25 @@ const dpState = handleActions(
       };
     },
 
-    [responseUpdateDp.toString()]: (state, action: Actions['responseUpdateDp']) => ({
+    [responseUpdateDp.toString()]: (state, action) => ({
       ...state,
       ...action.payload,
     }),
   },
-  {}
+  {} as DpState
 );
 
-const thingModel = handleActions(
+type UpdateThingModelPayload = ty.device.OnReceivedThingModelMessageBody;
+
+const thingModel = handleActions<ThingModelInfo, UpdateThingModelPayload>(
   {
-    [initThingModel.toString()]: (state: IThingModel, action) => {
+    [initThingModel.toString()]: (state, action) => {
       return {
         ...state,
         ...action.payload,
       };
     },
-    [updateThingModel.toString()]: (
-      state,
-      action: { payload: { type: DpType; payload: ThingDp } }
-    ) => {
+    [updateThingModel.toString()]: (state, action) => {
       const {
         payload: { type, payload },
       } = action;
@@ -158,11 +148,14 @@ const thingModel = handleActions(
       };
     },
   },
-  {}
+  {} as ThingModelInfo
 );
 
+type ShowModalMap = Record<string, boolean>;
+type UpdateShowModal = { code: string; value: boolean };
+
 // 控制是否弹出事件弹框
-const showModal = handleActions(
+const showModal = handleActions<ShowModalMap, UpdateShowModal>(
   {
     [toggleShowModel.toString()]: (state, action) => ({
       ...state,
@@ -172,7 +165,7 @@ const showModal = handleActions(
   {}
 );
 
-const devInfo = handleActions(
+const devInfo = handleActions<DevInfo>(
   {
     [devInfoChange.toString()]: (state, action) => ({
       ...state,
@@ -184,10 +177,12 @@ const devInfo = handleActions(
       ...action.payload,
     }),
   },
-  {}
+  {} as DevInfo
 );
 
-const staticPrefix = handleActions<string>(
+type StaticPrefix = string;
+
+const staticPrefix = handleActions<StaticPrefix>(
   {
     [initStaticPrefix.toString()]: (state, action) => action.payload,
   },
@@ -233,70 +228,81 @@ const panelConfig = handleActions(
   defaultPanelConfig
 );
 
-const appTheme = handleActions(
-  {
-    [updateAppTheme.toString()]: (state, action) => ({
-      ...state,
-      ...action.payload,
-    }),
-  },
-  {}
-);
+// 目前没有用到
+// const appTheme = handleActions(
+//   {
+//     [updateAppTheme.toString()]: (state, action) => ({
+//       ...state,
+//       ...action.payload,
+//     }),
+//   },
+//   {}
+// );
 
-const formatLogs = (state: Logs, action: { payload: UpdateDpStatePayload }, send: boolean) => {
-  const ret = Object.keys(action.payload).reduce((obj, p) => {
-    const id = TYSdk.device.getDpIdByCode(p);
-    return { ...obj, [id]: action.payload[p] };
-  }, {});
-  const strIds = JSON.stringify(ret, null, 2);
-  const strCodes = JSON.stringify(action.payload, null, 2);
-  const date = new Date();
-  const time = `[${[
-    date.getHours(),
-    date.getMinutes(),
-    date.getSeconds(),
-    date.getMilliseconds(),
-  ].join(':')}]`;
-  const s = [{ strCodes, strIds, time, isSend: send }, ...state];
-  return s.slice(0, 30);
-};
+// 目前没有用到
+// const formatLogs = (state: Logs, action: { payload: UpdateDpStatePayload }, send: boolean) => {
+//   const ret = Object.keys(action.payload).reduce((obj, p) => {
+//     const id = TYSdk.device.getDpIdByCode(p);
+//     return { ...obj, [id]: action.payload[p] };
+//   }, {});
+//   const strIds = JSON.stringify(ret, null, 2);
+//   const strCodes = JSON.stringify(action.payload, null, 2);
+//   const date = new Date();
+//   const time = `[${[
+//     date.getHours(),
+//     date.getMinutes(),
+//     date.getSeconds(),
+//     date.getMilliseconds(),
+//   ].join(':')}]`;
+//   const s = [{ strCodes, strIds, time, isSend: send }, ...state];
+//   return s.slice(0, 30);
+// };
 
-let isSend = false;
+// let isSend = false;
 
-const logs = handleActions<Logs, undefined | UpdateDpStatePayload | DevInfo>(
-  {
-    [consoleChange.toString()]: state => {
-      isSend = true;
-      return state;
-    },
+// interface Log {
+//   strCodes: string;
+//   strIds: string;
+//   time: string;
+//   isSend: boolean;
+// }
 
-    [updateDp.toString()]: (state, action: Actions['updateDp']) => {
-      isSend = true;
-      return formatLogs(state, action, isSend);
-    },
+// type Logs = Array<Log>;
 
-    [devInfoChange.toString()]: (state, action: Actions['devInfoChange']) => {
-      const formatAction = { payload: action.payload.state };
-      return formatLogs(state, formatAction, isSend);
-    },
+// const logs = handleActions<Logs, undefined | UpdateDpStatePayload | DevInfo>(
+//   {
+//     [consoleChange.toString()]: state => {
+//       isSend = true;
+//       return state;
+//     },
 
-    [responseUpdateDp.toString()]: (state, action: Actions['responseUpdateDp']) => {
-      isSend = false;
-      return formatLogs(state, action, isSend);
-    },
+//     [updateDp.toString()]: (state, action: Actions['updateDp']) => {
+//       isSend = true;
+//       return formatLogs(state, action, isSend);
+//     },
 
-    [clearConsole.toString()]: () => [],
-  },
-  []
-);
+//     [devInfoChange.toString()]: (state, action: Actions['devInfoChange']) => {
+//       const formatAction = { payload: action.payload.state };
+//       return formatLogs(state, formatAction, isSend);
+//     },
+
+//     [responseUpdateDp.toString()]: (state, action: Actions['responseUpdateDp']) => {
+//       isSend = false;
+//       return formatLogs(state, action, isSend);
+//     },
+
+//     [clearConsole.toString()]: () => [],
+//   },
+//   []
+// );
 
 export const reducers = {
   staticPrefix,
   dpState,
   devInfo,
   panelConfig,
-  appTheme,
-  logs,
+  // appTheme,
+  // logs,
   thingModel,
   showModal,
 };
