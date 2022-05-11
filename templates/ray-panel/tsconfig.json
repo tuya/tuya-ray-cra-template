@@ -4,7 +4,7 @@
     "target": "ES2015",
     "module": "CommonJS",
     "lib": ["ESNext", "DOM"],
-    "declaration": true,
+    "declaration": false,
     "declarationMap": false,
     "emitDeclarationOnly": false,
     "moduleResolution": "node",
