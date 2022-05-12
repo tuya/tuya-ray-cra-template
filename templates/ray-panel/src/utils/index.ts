@@ -1,6 +1,6 @@
 import { NumberUtils } from '@ray/ray-panel-utils';
 import { store } from '@/redux';
-import { Strings } from '@ray/ray-panel-i18n';
+import Strings from '@/i18n';
 import mode from '../res/mode.png';
 
 export const getFaultStrings = (
