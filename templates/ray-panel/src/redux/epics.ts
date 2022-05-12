@@ -1,11 +1,28 @@
-import { TYSdk } from '@ray/ray-panel-core';
 import { Observable } from 'rxjs/Observable';
 import { ofType } from 'redux-observable';
 import { mergeMap } from 'rxjs/operators';
 import { actions } from './actions/common';
 
 const { responseUpdateDp, updateDp } = actions;
-const { putDeviceData } = TYSdk.device;
+
+const putDeviceData = ({ dps }) => {
+  return new Promise((resolve, reject) => {
+    const { deviceId } = ty.getLaunchOptionsSync().query;
+    ty.device.publishDps({
+      deviceId,
+      dps, // {'1': true, '2': false}
+      mode: 2,
+      pipelines: [],
+      options: {},
+      success: () => resolve({ success: true }),
+      fail: (d: any) => {
+        console.log('-----返回结果错误?', d);
+        reject(d);
+      },
+    });
+  });
+};
+
 /**
  * epics
  */

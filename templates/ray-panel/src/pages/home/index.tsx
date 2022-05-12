@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 import { View, ScrollView, Modal, Motion, Text } from '@ray/components';
-import { TYSdk } from '@ray/ray-panel-core';
 import { setNavigationBarTitle } from '@ray/api';
 import { Notification } from '@ray/ray-components-plus';
 import { CompList } from '@/components';
@@ -9,6 +8,7 @@ import { useSelector } from '@/redux';
 import { scaleNumber, transformData } from '@/utils';
 import Strings from '@/i18n';
 import NotifyPng from '@/res/notify.png';
+import { getDevInfo } from '@/api';
 import mode from '../../res/mode.png';
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
   const { services = [] } = thingModel;
 
   React.useEffect(() => {
-    const { name } = TYSdk.devInfo;
+    const { name } = getDevInfo();
     setNavigationBarTitle({ title: name });
   }, []);
 

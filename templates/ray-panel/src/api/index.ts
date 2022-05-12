@@ -1,5 +1,3 @@
-import { TYSdk } from '@ray/ray-panel-core';
-
 // 获取静态资源域名
 export const getOssUrl = () => {
   return new Promise((resolve, reject) => {
@@ -30,52 +28,51 @@ export const getUiIdI18N = (uiId: string): Promise<Record<string, any>> => {
 
 // 获取物模型信息
 export const getDeviceThingDataSource = (): Promise<any> => {
+  const { deviceId: devId } = ty.getLaunchOptionsSync().query;
   return new Promise((resolve, reject) => {
-    TYSdk.device.getDeviceInfo().then(deviceInfo => {
-      const { devId, dps } = deviceInfo;
-      ty.device.getDeviceThingModelInfo({
-        devId,
-        success: (thingModelInfo: any) => {
-          const { services } = thingModelInfo;
-          if (services && services.length === 0) {
-            console.warn('getDeviceThingModelInfo 调用成功，但是没有服务：', thingModelInfo);
-            resolve(thingModelInfo);
-          }
-          if (services && services.length > 0) {
-            const newServices = [];
-            services.forEach(service => {
-              const { properties, events, actions } = service;
-              let modifiedProperties = properties.concat();
-              if (properties && properties.length > 0) {
-                modifiedProperties = properties.map(property => {
-                  const { abilityId } = property;
-                  return {
-                    ...property,
-                    value: dps[abilityId],
-                  };
-                });
-              }
-              newServices.push({ properties: modifiedProperties, events, actions });
-            });
-            console.log('getDeviceThingModelInfo 调用成功:', thingModelInfo);
-            resolve({
-              ...thingModelInfo,
-              services: newServices,
-            });
-          }
-        },
-        fail: (error: any) => {
-          console.log('getDeviceThingModelInfo 调用失败', error);
-          reject(error);
-        },
-      });
+    const { dps } = getDevInfo();
+    ty.device.getDeviceThingModelInfo({
+      devId,
+      success: (thingModelInfo: any) => {
+        const { services } = thingModelInfo;
+        if (services && services.length === 0) {
+          console.warn('getDeviceThingModelInfo 调用成功，但是没有服务：', thingModelInfo);
+          resolve(thingModelInfo);
+        }
+        if (services && services.length > 0) {
+          const newServices = [];
+          services.forEach(service => {
+            const { properties, events, actions } = service;
+            let modifiedProperties = properties.concat();
+            if (properties && properties.length > 0) {
+              modifiedProperties = properties.map(property => {
+                const { abilityId } = property;
+                return {
+                  ...property,
+                  value: dps[abilityId],
+                };
+              });
+            }
+            newServices.push({ properties: modifiedProperties, events, actions });
+          });
+          console.log('getDeviceThingModelInfo 调用成功:', thingModelInfo);
+          resolve({
+            ...thingModelInfo,
+            services: newServices,
+          });
+        }
+      },
+      fail: (error: any) => {
+        console.log('getDeviceThingModelInfo 调用失败', error);
+        reject(error);
+      },
     });
   });
 };
 
 // 下发属性
 export const publishPropertyDpData = (payload: { [key: string]: any }): Promise<void> => {
-  const { devId } = TYSdk.devInfo;
+  const { deviceId: devId } = ty.getLaunchOptionsSync().query;
   return new Promise((resolve, reject) => {
     ty.device.publishThingModelMessage({
       devId,
@@ -99,7 +96,7 @@ export const publishActionDpData = (payload: {
   actionCode: string;
   inputParams: { code: string; typeSpec: { [key: string]: any } }[];
 }): Promise<void> => {
-  const { devId } = TYSdk.devInfo;
+  const { deviceId: devId } = ty.getLaunchOptionsSync().query;
   return new Promise((resolve, reject) => {
     ty.device.publishThingModelMessage({
       devId,
@@ -115,4 +112,25 @@ export const publishActionDpData = (payload: {
       },
     });
   });
+};
+
+let __deviceInfo = null;
+export const initDevInfo = () => {
+  const { deviceId: devId } = ty.getLaunchOptionsSync().query;
+  return new Promise(resolve => {
+    ty.device.getDeviceInfo({
+      deviceId: devId,
+      success: deviceInfo => {
+        __deviceInfo = deviceInfo;
+        console.log('----------------9999', __deviceInfo);
+        resolve(null);
+      },
+      fail: console.log,
+    });
+  });
+};
+
+export const getDevInfo = () => {
+  console.log('----------------88888', __deviceInfo);
+  return __deviceInfo;
 };

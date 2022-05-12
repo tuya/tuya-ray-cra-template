@@ -4,7 +4,6 @@ import _ from 'lodash';
 import { detailedDiff } from 'deep-object-diff';
 import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
-import { DevInfo } from '@ray/ray-panel-core';
 import { Strings } from '@ray/ray-panel-i18n';
 import { Theme } from '@ray/ray-panel-theme';
 import { JsonUtils } from '@ray/ray-panel-utils';
@@ -13,7 +12,7 @@ import { ReduxState } from '@/redux/store';
 import { actions, store } from '@/redux';
 import defaultUiConfig from '@/config/panelConfig/iot';
 import { Connect } from '@/components';
-import { getOssUrl, getUiIdI18N, getDeviceThingDataSource } from '@/api';
+import { getOssUrl, getUiIdI18N, getDeviceThingDataSource, initDevInfo } from '@/api';
 import { thingDpType } from '@/constant';
 
 const { parseJSON } = JsonUtils;
@@ -40,8 +39,6 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
 
   const onInit = (devInfo: DevInfo) => {
     try {
-      console.log('00000000000000', devInfo);
-
       getOssUrl().then(staticPrefix => dispatch(actions.common.initStaticPrefix(staticPrefix)));
       // @ts-expect-error
       dispatch(actions.common.updateMiscConfig({ hasSwitch: !!devInfo.schema.switch }));
@@ -52,10 +49,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
 
   const onApplyConfig = async (config: Config, devInfo: DevInfo, source: string) => {
     try {
-      console.log('111111111', devInfo, config.iot);
-
       dispatch(actions.common.initIoTConfig(config.iot));
-
       const bicConfigMap: CloudConfig = _.get(devInfo, 'panelConfig.bic', []).reduce(
         (acc: CloudConfig, cur: CloudConfig['jump_url'] | CloudConfig['timer']) => ({
           ...acc,
@@ -123,7 +117,6 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
 
   const initThingModel = devId => {
     getDeviceThingDataSource().then(data => {
-      console.log('---------00000----------', data);
       dispatch(actions.common.initThingModel(data));
     });
     // 订阅接受物模型推送消息
@@ -156,7 +149,8 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
       };
     }
 
-    onLaunch(object: any) {
+    async onLaunch(object: any) {
+      await initDevInfo();
       this.init();
       console.log('app onLaunch: ', object);
     }

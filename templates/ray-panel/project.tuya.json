@@ -2,6 +2,6 @@
   "projectname": "ray-panel-template",
   "i18n": false,
   "description": "项目描述",
-  "baseversion": "2.1.14",
+  "baseversion": "2.1.3",
   "miniprogramRoot": "./dist/tuya"
 }

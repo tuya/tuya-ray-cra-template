@@ -15,9 +15,7 @@ type Reducers = typeof commonReducers & typeof theme;
 
 export type ReduxState = { [K in keyof Reducers]: ReturnType<Reducers[K]> };
 
-const getReducers = () => combineReducers(reducers);
-
-export const rootReducers = getReducers();
+export const rootReducers = combineReducers(reducers);
 
 const allEpics = [...commonEpics];
 
