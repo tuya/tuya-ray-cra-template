@@ -9,9 +9,6 @@ export const getOssUrl = () => {
       postData: {},
       success: response => resolve(response),
       fail: error => reject(error),
-      complete: result => {
-        console.log('apiRequestByAtop', 'tuya.m.app.panel.url.get', result);
-      },
     });
   });
 };
@@ -27,9 +24,6 @@ export const getUiIdI18N = (uiId: string): Promise<Record<string, any>> => {
         typeof response === 'string' ? resolve(JSON.parse(response)) : resolve(response);
       },
       fail: error => reject(error),
-      complete: result => {
-        console.log('apiRequestByAtop', 'tuya.m.ui.i18n.info.get', result);
-      },
     });
   });
 };

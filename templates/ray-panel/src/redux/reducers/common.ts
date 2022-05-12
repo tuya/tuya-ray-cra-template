@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { handleActions } from 'redux-actions';
 import _ from 'lodash';
 import { panelConfig as defaultPanelConfig } from '@/config';
@@ -31,7 +32,9 @@ const {
   toggleShowModel,
 } = actions;
 
-export type Actions = { [K in keyof typeof actions]: ReturnType<typeof actions[K]> };
+export type Actions = {
+  [K in keyof typeof actions]: ReturnType<typeof actions[K]>;
+};
 export type DpValue = boolean | number | string;
 
 interface DpState {
@@ -106,7 +109,9 @@ const thingModel = handleActions<ThingModelInfo, UpdateThingModelPayload>(
             if (actionItem.code === actionCode) {
               const newOutputParams = actionItem.outputParams.map(params => {
                 if (_.keys(data?.outputParams || {}).includes(params.code)) {
-                  return _.merge(params, { value: data?.outputParams?.[params.code] });
+                  return _.merge(params, {
+                    value: data?.outputParams?.[params.code],
+                  });
                 }
                 return params;
               });
@@ -127,7 +132,9 @@ const thingModel = handleActions<ThingModelInfo, UpdateThingModelPayload>(
             if (eventItem.code === eventCode) {
               const newOutputParams = eventItem.outputParams.map(params => {
                 if (_.keys(data?.outputParams || {}).includes(params.code)) {
-                  return _.merge(params, { value: data?.outputParams?.[params.code] });
+                  return _.merge(params, {
+                    value: data?.outputParams?.[params.code],
+                  });
                 }
                 return params;
               });
@@ -153,11 +160,10 @@ const thingModel = handleActions<ThingModelInfo, UpdateThingModelPayload>(
 
 type ShowModalMap = Record<string, boolean>;
 type UpdateShowModal = { code: string; value: boolean };
-
 // 控制是否弹出事件弹框
 const showModal = handleActions<ShowModalMap, UpdateShowModal>(
   {
-    [toggleShowModel.toString()]: (state, action) => ({
+    [toggleShowModel.toString()]: (state, action: { payload: any }) => ({
       ...state,
       [action.payload.code]: action.payload.value,
     }),

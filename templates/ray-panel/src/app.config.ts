@@ -3,7 +3,7 @@
 export const wechat = {
   window: {
     backgroundColor: '#f2f4f6',
-    navigationBarTitleText: '',
+    navigationBarTitleText: 'Ray 小程序示例',
     navigationBarBackgroundColor: '#f2f4f6',
     navigationBarTextStyle: 'black',
   },

@@ -11,11 +11,13 @@ const reducers = {
   ...theme,
 };
 
-type Reducers = typeof reducers;
+type Reducers = typeof commonReducers & typeof theme;
 
 export type ReduxState = { [K in keyof Reducers]: ReturnType<Reducers[K]> };
 
-export const rootReducers = combineReducers(reducers);
+const getReducers = () => combineReducers(reducers);
+
+export const rootReducers = getReducers();
 
 const allEpics = [...commonEpics];
 
@@ -23,7 +25,7 @@ export const rootEpics = combineEpics(...allEpics);
 
 const epicMiddleware = createEpicMiddleware();
 
-const isDebuggingInChrome = isNative && __DEV__ && !!window.navigator.userAgent;
+const isDebuggingInChrome = isNative && global.__DEV__ && !!window.navigator.userAgent;
 const logger = createLogger({
   predicate: () => isDebuggingInChrome,
   collapsed: true,
