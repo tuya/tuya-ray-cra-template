@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Text, View, Modal, Input } from '@ray/components';
+import { Button, Text, View, Modal, Input } from '@ray-js/components';
 import debounce from 'lodash/debounce';
-import { isNative } from '@ray/env';
+import { isNative } from '@ray-js/env';
 import Strings from '@/i18n';
 import { IPromptProps, defaultPromptProps } from './props';
 import styles from './index.module.less';

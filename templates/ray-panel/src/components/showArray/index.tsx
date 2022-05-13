@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { View, Text } from '@ray/components';
+import { View, Text } from '@ray-js/components';
 import { IProps } from './interface';
 import withLogic from './withLogic';
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
-import { View, Text, Image } from '@ray/components';
+import { View, Text, Image } from '@ray-js/components';
 import Strings from '@/i18n';
 import { IProps } from './interface';
 import withLogic from './withLogic';
@@ -8,14 +8,14 @@ import withLogic from './withLogic';
 import { CompList } from '../index';
 import DeletePng from '../../res/delete.png';
 
-/* 
+/*
   数组下元素类型
     - 数值型
     - 字符型
     - 布尔型
     - 枚举型
     - 透传型
-    
+
     - 时间型 过滤
     - 故障型 过滤
 */

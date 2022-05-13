@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "@ray/cli": "^0.1.0",
+    "@ray-js/cli": "latest",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "react": "^17.0.2",
@@ -11,9 +11,9 @@
     "webpack-chain": "^6.5.1"
   },
   "dependencies": {
-    "@ray/components": "^0.1.0",
-    "@ray/framework": "^0.1.0",
-    "@ray/types": "^0.1.0"
+    "@ray-js/components": "latest",
+    "@ray-js/framework": "latest",
+    "@ray-js/types": "latest"
   },
   "scripts": {
     "build:tuya": "ray build --target=tuya",

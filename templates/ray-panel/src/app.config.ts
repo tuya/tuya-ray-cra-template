@@ -1,4 +1,4 @@
-// this file generate by @ray/build-plugin-router.
+// this file generate by @ray-js/build-plugin-router.
 // do not modify this file!!!
 export const wechat = {
   window: {

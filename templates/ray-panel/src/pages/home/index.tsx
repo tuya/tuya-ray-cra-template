@@ -1,14 +1,16 @@
 import React from 'react';
 import _ from 'lodash';
-import { View, ScrollView, Modal, Motion, Text } from '@ray/components';
-import { setNavigationBarTitle } from '@ray/api';
-import { Notification } from '@ray/ray-components-plus';
+
 import { CompList } from '@/components';
 import { useSelector } from '@/redux';
 import { scaleNumber, transformData } from '@/utils';
-import Strings from '@/i18n';
 import NotifyPng from '@/res/notify.png';
 import { getDevInfo } from '@/api';
+import { View, ScrollView, Modal, Motion, Text } from '@ray-js/components';
+import Strings from '@/i18n';
+import { setNavigationBarTitle } from '@ray-js/api';
+import { Notification } from '@ray-js/ray-components-plus';
+
 import mode from '../../res/mode.png';
 
 export default function Home() {

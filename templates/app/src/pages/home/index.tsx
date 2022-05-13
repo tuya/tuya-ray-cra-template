@@ -2,7 +2,7 @@ import { location, router, usePageEvent } from 'ray';
 import React from 'react';
 
 import Foo from '@/components/Foo';
-import { Button, View, Text } from '@ray/components';
+import { Button, View, Text } from '@ray-js/components';
 
 import styles from './index.module.less';
 

@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Text } from '@ray/components';
+import { Text } from '@ray-js/components';
 import _ from 'lodash';
 import { detailedDiff } from 'deep-object-diff';
 import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
-import { Theme } from '@ray/ray-panel-theme';
-import { JsonUtils } from '@ray/ray-panel-utils';
-import { CloudConfig, Config, withConfig } from '@ray/ray-panel-standard-hoc';
 import Strings from '@/i18n';
 import { ReduxState } from '@/redux/store';
 import { actions, store } from '@/redux';
 import defaultUiConfig from '@/config/panelConfig/iot';
 import { Connect } from '@/components';
 import { getOssUrl, getUiIdI18N, getDeviceThingDataSource, initDevInfo } from '@/api';
+import { Theme } from '@ray-js/ray-panel-theme';
+import { JsonUtils } from '@ray-js/ray-panel-utils';
+import { CloudConfig, Config, withConfig } from '@ray-js/ray-panel-standard-hoc';
+
 import { thingDpType } from '@/constant';
 
 const { parseJSON } = JsonUtils;

@@ -1,4 +1,4 @@
-import { GlobalConfig } from '@ray/types';
+import { GlobalConfig } from '@ray-js/types';
 
 export const wechat = {
   window: {
@@ -25,13 +25,13 @@ export const native = {
     backgroundColorTop: 'red',
     navigationStyle: 'custom',
   },
-  pageWrapper: ['@ray/ray-panel-wrapper/lib/page'],
+  pageWrapper: ['@ray-js/ray-panel-wrapper/lib/page'],
 
   dependencies: {
-    DeviceKit: '^2.0.11',
-    HomeKit: '^2.0.3',
-    BaseKit: '^2.0.8',
-    TYKit: '^2.0.6',
+    BaseKit: '2.1.2',
+    DeviceKit: '2.1.6',
+    MiniKit: '2.3.0',
+    TYKit: '2.0.7',
   },
 };
 
@@ -43,12 +43,12 @@ export const tuya = {
     navigationBarTextStyle: 'black',
   },
   dependencies: {
-    BaseKit: '2.0.5',
-    DeviceKit: '2.0.5',
-    MiniKit: '2.0.6',
-    TYKit: '2.0.5',
+    BaseKit: '2.1.2',
+    DeviceKit: '2.1.6',
+    MiniKit: '2.3.0',
+    TYKit: '2.0.7',
   },
-  pageWrapper: ['@ray/ray-components-plus/lib/CommonWrp', '@ray/ray-panel-wrapper/lib/page'],
+  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp', '@ray-js/ray-panel-wrapper/lib/page'],
 };
 
 const globalConfig: GlobalConfig = {

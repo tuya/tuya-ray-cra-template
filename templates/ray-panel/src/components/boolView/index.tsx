@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Switch, Image } from '@ray/components';
-import { ThemeUtils } from '@ray/ray-panel-utils';
+import { View, Text, Switch, Image } from '@ray-js/components';
+import { ThemeUtils } from '@ray-js/ray-panel-utils';
 import { publishPropertyDpData } from '@/api';
 import styles from './index.module.less';
 import { IBoolViewProps, defaultBoolViewProps, IBoolViewState } from './props';

@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
-import { ThemeUtils } from '@ray/ray-panel-utils';
-import { defaultTheme } from '@ray/ray-panel-theme';
+import { ThemeUtils } from '@ray-js/ray-panel-utils';
+import { defaultTheme } from '@ray-js/ray-panel-theme';
 import { theme as localTheme } from '../../config';
 import { toggleTheme, updateTheme } from '../actions/theme';
 

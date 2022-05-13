@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, Image } from '@ray/components';
-import { ThemeUtils } from '@ray/ray-panel-utils';
+import { View, Text, Image } from '@ray-js/components';
+import { ThemeUtils } from '@ray-js/ray-panel-utils';
 import ModalPrompt from '@/components/modalPrompt';
 import { publishPropertyDpData } from '@/api';
-import { showToast } from '@ray/api';
+import { showToast } from '@ray-js/api';
 import Strings from '@/i18n';
 import styles from './index.module.less';
 import { IStringViewProps, defaultStringViewProps, IStringViewState } from './props';

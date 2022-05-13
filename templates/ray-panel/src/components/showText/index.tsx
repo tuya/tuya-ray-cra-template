@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from '@ray/components';
+import { View, Text } from '@ray-js/components';
 import Strings from '@/i18n';
 import { IProps } from './interface';
 import withLogic from './withLogic';
