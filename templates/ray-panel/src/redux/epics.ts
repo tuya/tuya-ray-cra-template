@@ -1,4 +1,4 @@
-import { TYSdk } from '@ray/ray-panel-core';
+import { TYSdk } from '@ray-js/ray-panel-core';
 import { Observable } from 'rxjs/Observable';
 import { ofType } from 'redux-observable';
 import { mergeMap } from 'rxjs/operators';

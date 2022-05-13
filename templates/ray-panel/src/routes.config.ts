@@ -1,4 +1,4 @@
-import { Routes, TabBar } from '@ray/types';
+import { Routes, TabBar } from '@ray-js/types';
 
 export const routes: Routes = [
   {

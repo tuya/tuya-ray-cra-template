@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/partition';
-import { TYSdk } from '@ray/ray-panel-core';
+import { TYSdk } from '@ray-js/ray-panel-core';
 import { thingDpType } from '@/constant';
 
 import { actions } from '../actions/common';

@@ -1,4 +1,4 @@
-import { GlobalConfig } from '@ray/types';
+import { GlobalConfig } from '@ray-js/types';
 
 export const wechat = {
   window: {
@@ -25,7 +25,7 @@ export const native = {
     backgroundColorTop: 'red',
     navigationStyle: 'custom',
   },
-  pageWrapper: ['@ray/ray-panel-wrapper/lib/page'],
+  pageWrapper: ['@ray-js/ray-panel-wrapper/lib/page'],
 
   dependencies: {
     DeviceKit: '^2.0.11',
@@ -48,7 +48,7 @@ export const tuya = {
     MiniKit: '2.0.6',
     TYKit: '2.0.5',
   },
-  pageWrapper: ['@ray/ray-components-plus/lib/CommonWrp'],
+  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp'],
 };
 
 const globalConfig: GlobalConfig = {

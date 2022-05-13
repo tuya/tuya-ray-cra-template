@@ -17,7 +17,7 @@
     "paths": {
       "ray": ["./.ray"],
       "@/*": ["./src/*"],
-      "@ray/*": ["../packages/*/src"]
+      "@ray-js/*": ["../packages/*/src"]
     }
   },
   "include": ["src/**/*.*", ".ray/**/*.*", "typings"],

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Button, Text } from '@ray/components';
+import { View, Button, Text } from '@ray-js/components';
 import { location, router } from 'ray';
 
 export default function Home() {

@@ -1,4 +1,4 @@
-import { RayConfig } from '@ray/types';
+import { RayConfig } from '@ray-js/types';
 
 const config: RayConfig = {};
 

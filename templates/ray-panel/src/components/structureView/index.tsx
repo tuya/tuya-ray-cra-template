@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from '@ray/components';
-import { ThemeUtils } from '@ray/ray-panel-utils';
+import { View } from '@ray-js/components';
+import { ThemeUtils } from '@ray-js/ray-panel-utils';
 import { publishPropertyDpData } from '@/api';
 import { IStructureViewProps, defaultStructureProps } from './props';
 import BoolView from '../boolView';

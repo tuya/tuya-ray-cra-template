@@ -1,4 +1,4 @@
-// this file generate by @ray/build-plugin-router.
+// this file generate by @ray-js/build-plugin-router.
 // do not modify this file!!!
 export const wechat = {
   window: {
@@ -22,7 +22,7 @@ export const tuya = {
     MiniKit: '2.0.6',
     TYKit: '2.0.5',
   },
-  pageWrapper: ['@ray/ray-components-plus/lib/CommonWrp'],
+  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp'],
   pages: ['pages/home/index'],
   tabBar: {},
 };

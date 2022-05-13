@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from '@ray/components';
+import { View, Text, Image } from '@ray-js/components';
 import { formatTime } from '@/utils';
 import Strings from '@/i18n';
 import rect from '@/res/rect.png';

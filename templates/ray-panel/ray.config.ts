@@ -24,13 +24,13 @@ const config = {
     },
     plugins: [], // 添加所需plugins 如： babel-plugin-global-define（默认已包含）。
     presets: [], // 添加自定义presets 如： module:metro-react-native-babel-preset（默认已包含）。
-    entry: '', // 自定义入口文件，默认入口文件为@ray/main.native.tsx， 可通过该参数进行自定义
+    entry: '', // 自定义入口文件，默认入口文件为@ray-js/main.native.tsx， 可通过该参数进行自定义
 
     postcss: {
       scalable: true, // 是否支持缩放 css-to-react-native中的配置
     },
     transformer: null, // 自定义metro transformer
-    babelPlugin: require.resolve('@ray/rn-transformer-helper'), // 自定义metro babelPlugin
+    babelPlugin: require.resolve('@ray-js/rn-transformer-helper'), // 自定义metro babelPlugin
     enableMultipleClassName: true, // 是否支持多className定义，如： <View className="aaa bbb"/>
     enableMergeStyle: true, // 是否需要合并样式表，默认为true
   },

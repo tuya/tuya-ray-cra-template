@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { View, Text, Modal, Image, ScrollView } from '@ray/components';
+import { View, Text, Modal, Image, ScrollView } from '@ray-js/components';
 import Strings from '@/i18n';
 import { scaleNumber } from '@/utils';
 import rect from '@/res/rect.png';

@@ -1,4 +1,4 @@
-import { TYSdk } from '@ray/ray-panel-core';
+import { TYSdk } from '@ray-js/ray-panel-core';
 
 // 获取静态资源域名
 export const getOssUrl = () => {

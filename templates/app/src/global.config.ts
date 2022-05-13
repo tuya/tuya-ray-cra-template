@@ -1,4 +1,4 @@
-import { GlobalConfig } from '@ray/types';
+import { GlobalConfig } from '@ray-js/types';
 
 export const wechat = {
   window: {

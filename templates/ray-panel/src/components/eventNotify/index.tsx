@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { View, Text, Modal, Image, ScrollView } from '@ray/components';
+import { View, Text, Modal, Image, ScrollView } from '@ray-js/components';
 import Close from '@/res/close.png';
 import { IEventItemProps, IProps } from './interface';
 import withLogic from './withLogic';

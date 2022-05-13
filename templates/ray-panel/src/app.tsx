@@ -1,6 +1,6 @@
 import React from 'react';
 import 'ray';
-import { RayAppWrapper } from '@ray/ray-panel-wrapper';
+import { RayAppWrapper } from '@ray-js/ray-panel-wrapper';
 import composeLayout from './composeLayout';
 
 class App extends React.Component {
