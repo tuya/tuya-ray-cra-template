@@ -20,5 +20,5 @@ export interface IProps {
 export interface ILogicCompProps {
   title_name: string;
   image: any;
-  thingModelDp: ThingAction;
+  thingModelDp: ty.device.ThingAction;
 }

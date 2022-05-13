@@ -7,7 +7,7 @@ import { thingDpType } from '@/constant';
 const { dispatch } = store;
 
 function withLogic(Comp): React.ReactNode {
-  function LogicComp(props: { thingModelDp: ThingAction; devId: string }) {
+  function LogicComp(props: { thingModelDp: ty.device.ThingAction; devId: string }) {
     const { thingModelDp, devId } = props;
     const { code, inputParams } = props.thingModelDp;
     const showModal = useSelector(state => state.showModal);
