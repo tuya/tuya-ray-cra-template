@@ -12,7 +12,6 @@
     "build:tuya": "ray build -t tuya --verbose"
   },
   "dependencies": {
-    "@ray-js/cli": "latest",
     "@ray-js/components": "latest",
     "@ray-js/framework": "latest",
     "@ray-js/framework-native": "latest",
@@ -37,7 +36,7 @@
     "rxjs-compat": "^6.3.1"
   },
   "devDependencies": {
-    "@ray/cli": "^0.2.1",
+    "@ray-js/cli": "latest",
     "@commitlint/cli": "^7.2.1",
     "@commitlint/config-conventional": "^9.0.1",
     "@types/lodash": "^4.14.182",
