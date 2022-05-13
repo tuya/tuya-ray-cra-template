@@ -106,7 +106,7 @@ const thingModel = handleActions<ThingModelInfo, UpdateThingModelPayload>(
           const newAction = _.assign([], actionsModel);
           actionsModel.some((actionItem, index) => {
             if (actionItem.code === actionCode) {
-              const newOutputParams = actionItem.outputParams.map(params => {
+              const newOutputParams = actionItem.outputParams.map((params: any) => {
                 if (_.keys(data?.outputParams || {}).includes(params.code)) {
                   return _.merge(params, {
                     value: data?.outputParams?.[params.code],
@@ -129,7 +129,7 @@ const thingModel = handleActions<ThingModelInfo, UpdateThingModelPayload>(
           const newEvent = _.assign([], events);
           events.some((eventItem, index) => {
             if (eventItem.code === eventCode) {
-              const newOutputParams = eventItem.outputParams.map(params => {
+              const newOutputParams = eventItem.outputParams.map((params: any) => {
                 if (_.keys(data?.outputParams || {}).includes(params.code)) {
                   return _.merge(params, {
                     value: data?.outputParams?.[params.code],
