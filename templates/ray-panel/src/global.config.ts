@@ -48,6 +48,7 @@ export const tuya = {
     MiniKit: '2.3.0',
     TYKit: '2.0.7',
   },
+  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp', '@ray-js/ray-panel-wrapper/lib/page'],
 };
 
 const globalConfig: GlobalConfig = {

@@ -22,6 +22,7 @@ export const tuya = {
     MiniKit: '2.0.6',
     TYKit: '2.0.5',
   },
+  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp'],
   pages: ['pages/home/index'],
   tabBar: {},
 };
