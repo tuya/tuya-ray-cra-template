@@ -20,7 +20,7 @@ function withLogic(Comp): React.ReactNode {
     const handleChange = data => {
       console.log('action handleChange', data);
       const params = {};
-      data.forEach((d: { code: string | number; value: any }) => {
+      data.forEach((d: { code: string | number; value: any; defaultValue: any; typeSpec: any }) => {
         params[d?.code] = d?.value ?? d?.defaultValue ?? d?.typeSpec?.typeDefaultValue;
       });
       console.log({
@@ -44,7 +44,7 @@ function withLogic(Comp): React.ReactNode {
     const getValueList = () => {
       const { outputParams } = thingModelDp;
       const list = [];
-      outputParams.forEach(params => {
+      outputParams.forEach((params: any) => {
         const { typeSpec } = params;
         let value;
         if (typeSpec?.type === 'value') {

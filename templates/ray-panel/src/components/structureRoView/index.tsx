@@ -9,7 +9,7 @@ const { parseToStyle } = ThemeUtils;
 export default function StructureView(props: IStructureViewProps): JSX.Element | null {
   const { bg_color, bg_width, bg_singRadius, bg_padding, style, structureSource } = props;
   if (!structureSource || !structureSource.length) return null;
-  const renderItem = (item: { type: string }, index: number) => {
+  const renderItem = (item: { type: string; param_value: any; unit: any }, index: number) => {
     switch (item.type) {
       case 'bool':
         return (

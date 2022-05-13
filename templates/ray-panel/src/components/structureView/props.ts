@@ -11,7 +11,7 @@ export interface IStructureViewProps {
   style?: React.CSSProperties;
   title_name?: string;
   structureSource: (IMenuViewProps | IStringViewProps | INumberViewProps | IBoolViewProps) &
-    { type: string }[];
+    { type: string; key: string }[];
 }
 
 export const defaultStructureProps = {
