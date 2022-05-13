@@ -25,7 +25,7 @@ export default function StructureView(props: IStructureViewProps): JSX.Element |
   const getDpPayload = () => {
     const payloadValues = Object.values(structureSource);
     const payload = {};
-    payloadValues.forEach(value => {
+    payloadValues.forEach((value: any) => {
       const { key, param_value } = value;
       payload[key] = param_value;
     });
@@ -38,7 +38,7 @@ export default function StructureView(props: IStructureViewProps): JSX.Element |
     publishPropertyDpData({ [title_name]: { ...payload, [key]: value } });
   };
 
-  const renderItem = (item: { type: string }, index: number) => {
+  const renderItem = (item: { type: string; key: string }, index: number) => {
     switch (item.type) {
       case 'bool':
         return (

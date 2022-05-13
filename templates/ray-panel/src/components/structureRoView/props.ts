@@ -10,7 +10,7 @@ export interface IStructureViewProps {
   bg_padding?: string[];
   style?: React.CSSProperties;
   structureSource: (IMenuViewProps | IStringViewProps | INumberViewProps | IBoolViewProps) &
-    { type: string }[];
+    { type: string; param_value: any; unit: any }[];
 }
 
 export const defaultStructureProps = {
