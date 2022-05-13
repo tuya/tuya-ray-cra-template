@@ -13,7 +13,6 @@ import { getOssUrl, getUiIdI18N, getDeviceThingDataSource, initDevInfo } from '@
 import { Theme } from '@ray-js/ray-panel-theme';
 import { JsonUtils } from '@ray-js/ray-panel-utils';
 import { CloudConfig, Config, withConfig } from '@ray-js/ray-panel-standard-hoc';
-
 import { thingDpType } from '@/constant';
 
 const { parseJSON } = JsonUtils;
