@@ -12,7 +12,7 @@ function withLogic(Comp) {
     const getValueList = () => {
       const { outputParams } = thingModelDp;
       const list = [];
-      outputParams.forEach(params => {
+      outputParams.forEach((params: any) => {
         // params?.value要进行处理
         const { typeSpec } = params;
         let value;

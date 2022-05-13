@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import { thingDpType } from '@/constant';
 
 function withLogic(Comp): React.ReactNode {
-  class LogicComp extends Component<{ thingModelDp: ThingProperty; devId: string }> {
+  class LogicComp extends Component<{
+    thingModelDp: ty.device.ThingProperty;
+    devId: string;
+    title_name?: string;
+    image?: any;
+    param_value?: any;
+  }> {
     handleControl = value => {
       const { devId, thingModelDp } = this.props;
       const { code } = thingModelDp;
