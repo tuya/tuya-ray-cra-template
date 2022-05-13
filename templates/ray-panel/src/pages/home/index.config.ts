@@ -14,8 +14,5 @@ export const tuya = {
 };
 
 export const native = {
-  backgroundColor: 'transparent',
-  isBleOfflineOverlay: false,
-  useSafeAreaView: true,
-  // navigationBarTitleText: 'Ray RN Demo',
+  backgroundColor: '#f2f4f6',
 };

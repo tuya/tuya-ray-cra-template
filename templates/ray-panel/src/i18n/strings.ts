@@ -26,7 +26,8 @@ export default {
     raw_tips: 'Please enter a valid binary format',
     max_len_tips: 'The inputable string is out of length',
     thing_empty: 'The current device model information is empty',
-    hang: 'The current device does not have any function points, and the template displays a blank screen. If the function points are normal, delete the logic in this step',
+    hang:
+      'The current device does not have any function points, and the template displays a blank screen. If the function points are normal, delete the logic in this step',
   },
   zh: {
     hit_empty: '空值!',

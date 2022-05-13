@@ -105,7 +105,7 @@ function ControlArray(props: IProps) {
     setValueList(valueList.concat([elementDefaultValue[itemType]]));
   };
 
-  const removeItem = (index) => {
+  const removeItem = index => {
     console.log('removeItem', index);
     const newViewList = _.assign([], valueList);
     newViewList.splice(index, 1);
@@ -141,7 +141,7 @@ function ControlArray(props: IProps) {
           alignItems: 'center',
         }}
       >
-        <Image src={image} mode='aspectFill' style={{ width: '28rpx', height: '28rpx' }} />
+        <Image src={image} mode="aspectFill" style={{ width: '28rpx', height: '28rpx' }} />
         <Text style={{ fontSize: '30rpx', marginLeft: '24rpx', color: '#3D3D3D' }}>
           {title_name}
         </Text>

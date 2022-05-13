@@ -51,7 +51,7 @@ class PushAction extends Component<IProps, IState> {
   onChange = (event, code: string) => {
     const { value } = event;
     const { params } = this.state;
-    const newParams = params.map((p) => {
+    const newParams = params.map(p => {
       const { code: pCode } = p;
       if (code === pCode) {
         return { ...p, value };
@@ -71,18 +71,27 @@ class PushAction extends Component<IProps, IState> {
     });
   };
 
-  renderItem = (item) => {
+  renderItem = item => {
     const { code, typeSpec, defaultValue, value } = item;
-    const { type, range, unit, min, max, scale, step, maxlen, typeDefaultValue } =
-      typeSpec as Record<string, any>;
+    const {
+      type,
+      range,
+      unit,
+      min,
+      max,
+      scale,
+      step,
+      maxlen,
+      typeDefaultValue,
+    } = typeSpec as Record<string, any>;
     const finalValue = value ?? defaultValue ?? typeDefaultValue;
     const Comp = _.get(CompList, `prop.rwOrWr.${type}`);
     return Comp
       ? React.createElement(Comp, {
           title_name: code,
           key: code,
-          onChange: (e) => this.onChange(e, code),
-          onConfirm: (e) => this.onChange(e, code),
+          onChange: e => this.onChange(e, code),
+          onConfirm: e => this.onChange(e, code),
           dataSource: range,
           image: rect,
           unit,
@@ -118,7 +127,7 @@ class PushAction extends Component<IProps, IState> {
           onClose={this.closeNotifyModal}
           show={showNotifyModal}
         />
-        <Modal show={showModal} overlay position='center' onClickOverlay={this.closeModal}>
+        <Modal show={showModal} overlay position="center" onClickOverlay={this.closeModal}>
           <View
             style={{
               width: '720rpx',
@@ -131,7 +140,7 @@ class PushAction extends Component<IProps, IState> {
           >
             <ScrollView scrollY style={{ maxHeight: '504rpx', paddingBottom: '20rpx' }}>
               {_.isArray(params) && params.length > 0 ? (
-                params.map((item) => this.renderItem(item))
+                params.map(item => this.renderItem(item))
               ) : (
                 <View
                   style={{
@@ -227,7 +236,7 @@ class PushAction extends Component<IProps, IState> {
           onClick={() => this.openModal()}
         >
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <Image src={rect} mode='aspectFill' style={{ width: '28rpx', height: '28rpx' }} />
+            <Image src={rect} mode="aspectFill" style={{ width: '28rpx', height: '28rpx' }} />
             <Text
               style={{
                 marginLeft: '24rpx',
@@ -239,7 +248,7 @@ class PushAction extends Component<IProps, IState> {
               {title_name}
             </Text>
           </View>
-          <Image src={arrow} mode='aspectFill' style={{ width: '10rpx', height: '20rpx' }} />
+          <Image src={arrow} mode="aspectFill" style={{ width: '10rpx', height: '20rpx' }} />
         </View>
       </View>
     );

@@ -3,7 +3,7 @@ import { thingDpType } from '@/constant';
 
 function withLogic(Comp): React.ReactNode {
   class LogicComp extends Component<{ thingModelDp: ThingProperty; devId: string }> {
-    handleControl = (value) => {
+    handleControl = value => {
       const { devId, thingModelDp } = this.props;
       const { code } = thingModelDp;
       ty.device.publishThingModelMessage({

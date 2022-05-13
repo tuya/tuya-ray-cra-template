@@ -1,15 +1,15 @@
-import { getOssUrl, getUiIdI18N, getDeviceThingDataSource } from '@/api';
-import { Connect } from '@/components';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Text } from '@ray-js/components';
-import defaultUiConfig from '@/config/panelConfig/iot';
-import { actions, store } from '@/redux';
-import { ReduxState } from '@/redux/store';
 import _ from 'lodash';
 import { detailedDiff } from 'deep-object-diff';
 import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
-import { TYSdk } from '@ray-js/ray-panel-core';
-import { Strings } from '@ray-js/ray-panel-i18n';
+import Strings from '@/i18n';
+import { ReduxState } from '@/redux/store';
+import { actions, store } from '@/redux';
+import defaultUiConfig from '@/config/panelConfig/iot';
+import { Connect } from '@/components';
+import { getOssUrl, getUiIdI18N, getDeviceThingDataSource, initDevInfo } from '@/api';
 import { Theme } from '@ray-js/ray-panel-theme';
 import { JsonUtils } from '@ray-js/ray-panel-utils';
 import { CloudConfig, Config, withConfig } from '@ray-js/ray-panel-standard-hoc';
@@ -39,17 +39,18 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
 
   const onInit = (devInfo: DevInfo) => {
     try {
-      getOssUrl().then((staticPrefix) => dispatch(actions.common.initStaticPrefix(staticPrefix)));
+      getOssUrl().then(staticPrefix => dispatch(actions.common.initStaticPrefix(staticPrefix)));
+      // @ts-expect-error
       dispatch(actions.common.updateMiscConfig({ hasSwitch: !!devInfo.schema.switch }));
     } catch (error) {
       console.warn('onApplyConfig Failed :>> ', error);
     }
   };
 
-  const onApplyConfig = (config: Config, devInfo: DevInfo, source: string) => {
+  const onApplyConfig = async (config: Config, devInfo: DevInfo, source: string) => {
     try {
       dispatch(actions.common.initIoTConfig(config.iot));
-      const bicConfigMap: CloudConfig = _.get(TYSdk, 'devInfo.panelConfig.bic', []).reduce(
+      const bicConfigMap: CloudConfig = _.get(devInfo, 'panelConfig.bic', []).reduce(
         (acc: CloudConfig, cur: CloudConfig['jump_url'] | CloudConfig['timer']) => ({
           ...acc,
           [cur!.code]: cur,
@@ -59,7 +60,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
       const showSchedule = !!bicConfigMap?.timer?.selected;
       dispatch(actions.common.initBicConfig(bicConfigMap));
       const { timestamp, ...dpFun } = config.dpFun || {};
-      const funConfig = _.mapValues(dpFun, (value) => parseJSON(value));
+      const funConfig = _.mapValues(dpFun, value => parseJSON(value));
       dispatch(actions.common.initFunConfig({ ...funConfig, raw: config.dpFun }));
       dispatch(actions.common.updateMiscConfig({ ...config.misc, showSchedule }));
       dispatch(actions.common.initializedConfig());
@@ -68,7 +69,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
     }
   };
 
-  const NavigatorLayout: React.FC<Props> = (p) => {
+  const NavigatorLayout: React.FC<Props> = p => {
     return (
       <Connect mapStateToProps={_.identity}>
         {({ mapStateToProps, ...props }: ConnectedProps) => {
@@ -89,22 +90,17 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
     defaultUiConfig,
   })(NavigatorLayout);
 
-  const TYDevice = TYSdk.device;
-  const TYEvent = TYSdk.event;
+  ty.device.onDeviceInfoUpdated(data => {
+    dispatch(actions.common.deviceChange(data));
+  });
 
-  TYEvent.on('deviceDataChange', (data) => {
-    switch (data.type) {
-      case 'dpData':
-        dispatch(actions.common.responseUpdateDp(data.payload as any));
-        break;
-      default:
-        dispatch(actions.common.deviceChange(data.payload as DevInfo));
-        break;
-    }
+  ty.device.onDpDataChange(date => {
+    dispatch(actions.common.responseUpdateDp(data as any));
   });
 
   // 监听物模型消息推送
-  ty.device.onReceivedThingModelMessage((body: string) => {
+  ty.device.onReceivedThingModelMessage(body => {
+    // @ts-expect-error
     console.log('OnReceivedThingModelMessageBody 调用成功', JSON.parse(body));
     const message = typeof body === 'string' ? JSON.parse(body) : body;
     // 事件弹窗
@@ -119,8 +115,8 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
     dispatch(actions.common.updateThingModel(message));
   });
 
-  const initThingModel = (devId) => {
-    getDeviceThingDataSource().then((data) => {
+  const initThingModel = devId => {
+    getDeviceThingDataSource().then(data => {
       dispatch(actions.common.initThingModel(data));
     });
     // 订阅接受物模型推送消息
@@ -135,17 +131,17 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
       success: () => {
         console.log('subscribeDeviceRemoved 调用成功');
         // 监听删除设备事件
-        ty.device.onDeviceRemoved((body) => {
+        ty.device.onDeviceRemoved(body => {
           console.log('OnDeviceRemoved 调用成功', body);
           // 退出小程序容器
-          ty.exitMiniProgram();
+          ty.exitMiniProgram({});
         });
       },
       fail: () => console.log('subscribeDeviceRemoved 调用失败'),
     });
   };
 
-  class PanelComponent extends Component<Props, State> {
+  return class PanelComponent extends Component<Props, State> {
     constructor(props: Props) {
       super(props);
       this.state = {
@@ -153,7 +149,8 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
       };
     }
 
-    onLaunch(object: any) {
+    async onLaunch(object: any) {
+      await initDevInfo();
       this.init();
       console.log('app onLaunch: ', object);
     }
@@ -194,22 +191,8 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
       this.setState({ isI18NLoaded });
 
       if (props && props.devInfo && props.devInfo.devId) {
-        TYDevice.setDeviceInfo(props.devInfo);
-        TYDevice.getDeviceInfo().then((data) => {
-          dispatch(actions.common.devInfoChange(data));
-          data.devId && initThingModel(data.devId);
-        });
-      } else if (props.preload) {
-        // do something
-      } else {
-        TYDevice.getDeviceInfo()
-          .then((data) => {
-            dispatch(actions.common.devInfoChange(data));
-            data.devId && initThingModel(data.devId);
-          })
-          .catch((e: Error) => {
-            console.warn(e);
-          });
+        dispatch(actions.common.devInfoChange(props.devInfo));
+        initThingModel(props.devInfo.devId);
       }
 
       if (isI18NLoaded) {
@@ -226,22 +209,34 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
     applySubUiIDAddedI18N() {
       const { devInfo } = this.props;
       console.warn('检测到当前项目为二级页面开始获取当前项目 UIID 多语言');
-      getUiIdI18N(devInfo.uiId).then((data) => {
+      getUiIdI18N(devInfo.uiId).then(data => {
         console.log('多语言获取成功：', data);
-        const diff = detailedDiff(TYSdk.native.lang, data) as {
-          added: Record<string, unknown>;
-          updated: Record<string, unknown>;
-          deleted: Record<string, unknown>;
-        };
-        Strings.applyStrings(diff.added);
-        console.warn('当前二级页面 uiId 多语言有以下字段与 pid 多语言冲突，请注意!', diff.updated);
-        this.setState({ isI18NLoaded: true });
+
+        ty.getLangContent({
+          success: ({ langContent }) => {
+            // @ts-ignore
+            const { langKey, ...rest } = langContent || {};
+            const diff = detailedDiff(rest, data) as {
+              added: Record<string, unknown>;
+              updated: Record<string, unknown>;
+              deleted: Record<string, unknown>;
+            };
+            Strings.applyStrings(diff.added);
+            console.warn(
+              '当前二级页面 uiId 多语言有以下字段与 pid 多语言冲突，请注意!',
+              diff.updated
+            );
+            this.setState({ isI18NLoaded: true });
+          },
+        });
       });
     }
 
     render() {
       const { devInfo, extraInfo } = this.props;
       const { isI18NLoaded } = this.state;
+      console.log('isI18NLoaded', isI18NLoaded);
+
       return (
         <Provider store={store}>
           <ThemeContainer>
@@ -252,9 +247,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
         </Provider>
       );
     }
-  }
-
-  return PanelComponent;
+  };
 };
 
 export default composeLayout;

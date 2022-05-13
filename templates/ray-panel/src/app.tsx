@@ -1,6 +1,9 @@
 import React from 'react';
+// eslint-disable-next-line import/no-unresolved
 import 'ray';
+import '@/i18n';
 import { RayAppWrapper } from '@ray-js/ray-panel-wrapper';
+
 import composeLayout from './composeLayout';
 
 class App extends React.Component {

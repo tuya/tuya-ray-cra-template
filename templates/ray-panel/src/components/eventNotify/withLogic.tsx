@@ -8,11 +8,11 @@ const { dispatch } = store;
 function withLogic(Comp) {
   return function LogicComp(props: ILogicCompProps) {
     const { title_name, image, thingModelDp } = props;
-    const showModal = useSelector((state) => state.showModal);
+    const showModal = useSelector(state => state.showModal);
     const getValueList = () => {
       const { outputParams } = thingModelDp;
       const list = [];
-      outputParams.forEach((params) => {
+      outputParams.forEach(params => {
         // params?.value要进行处理
         const { typeSpec } = params;
         let value;

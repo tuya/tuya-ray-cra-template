@@ -3,7 +3,7 @@
 export const wechat = {
   window: {
     backgroundColor: '#f2f4f6',
-    navigationBarTitleText: '',
+    navigationBarTitleText: 'Ray 小程序示例',
     navigationBarBackgroundColor: '#f2f4f6',
     navigationBarTextStyle: 'black',
   },
@@ -22,7 +22,7 @@ export const tuya = {
     MiniKit: '2.0.6',
     TYKit: '2.0.5',
   },
-  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp'],
+  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp', '@ray-js/ray-panel-wrapper/lib/page'],
   pages: ['pages/home/index'],
   tabBar: {},
 };

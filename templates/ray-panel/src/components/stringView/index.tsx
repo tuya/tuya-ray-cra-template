@@ -45,7 +45,7 @@ export default class StringView extends React.PureComponent<IStringViewProps, IS
         .then(() => {
           this.setState({ visible: false, value });
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
           if (type === 'raw') {
             showToast({ title: Strings.getLang('raw_tips'), icon: 'fail' });

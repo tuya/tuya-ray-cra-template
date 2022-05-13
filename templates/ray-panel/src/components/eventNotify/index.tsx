@@ -56,7 +56,7 @@ function EventNotify(props: IProps) {
   };
 
   return (
-    <Modal show={show} overlay position='center' onClickOverlay={closeModal}>
+    <Modal show={show} overlay position="center" onClickOverlay={closeModal}>
       <View
         style={{
           width: '720rpx',

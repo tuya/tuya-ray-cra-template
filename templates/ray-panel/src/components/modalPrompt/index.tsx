@@ -49,7 +49,7 @@ export default function Prompt(props: IPromptProps): JSX.Element {
     setInputValue(_value);
   };
 
-  const _handleInput = (event) => {
+  const _handleInput = event => {
     const { value: valueInput } = event;
     if (valueInput.length > maxlen) return;
     if (isNative) {
@@ -60,7 +60,7 @@ export default function Prompt(props: IPromptProps): JSX.Element {
     }
   };
 
-  const debounceInput = debounce((valueInput) => {
+  const debounceInput = debounce(valueInput => {
     _setValue(valueInput);
     setDisabled(!valueInput);
   }, 500);
@@ -69,7 +69,7 @@ export default function Prompt(props: IPromptProps): JSX.Element {
     <Modal
       show={show}
       overlay
-      position='center'
+      position="center"
       customStyle={{ alignItems: 'center', justifyContent: 'center' }}
     >
       <View style={{ backgroundColor: bg_color, width: bg_width, borderRadius: bg_singRadius }}>
@@ -85,7 +85,7 @@ export default function Prompt(props: IPromptProps): JSX.Element {
           {...rest}
           style={{ width: '92%', marginLeft: '4%' }}
           focus
-          selectionColor='#158CFB'
+          selectionColor="#158CFB"
           onInput={_handleInput}
           value={_value}
         />

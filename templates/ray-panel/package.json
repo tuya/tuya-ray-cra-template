@@ -12,7 +12,6 @@
     "build:tuya": "ray build -t tuya --verbose"
   },
   "dependencies": {
-    "@ray-js/cli": "latest",
     "@ray-js/components": "latest",
     "@ray-js/framework": "latest",
     "@ray-js/framework-native": "latest",
@@ -37,17 +36,21 @@
     "rxjs-compat": "^6.3.1"
   },
   "devDependencies": {
+    "@ray-js/cli": "latest",
+    "@commitlint/cli": "^7.2.1",
+    "@commitlint/config-conventional": "^9.0.1",
+    "@types/lodash": "^4.14.182",
+    "@types/redux-actions": "^2.6.2",
+    "@types/redux-logger": "^3.0.9",
     "compressing": "^1.5.1",
     "core-js": "^3.19.1",
     "eslint-config-tuya-panel": "^0.4.1",
     "eslint-plugin-literal-check": "^0.1.2",
     "eslint-plugin-prettier": "^3.0.1",
-    "prettier": "^1.16.4",
-    "typescript": "^4.4.3",
     "husky": "^1.2.0",
     "lint-staged": "^10.2.11",
-    "@commitlint/cli": "^7.2.1",
-    "@commitlint/config-conventional": "^9.0.1"
+    "prettier": "^1.16.4",
+    "typescript": "^4.4.3"
   },
   "husky": {
     "hooks": {
