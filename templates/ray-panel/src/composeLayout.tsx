@@ -93,6 +93,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
   })(NavigatorLayout);
 
   ty.device.onDeviceInfoUpdated(data => {
+    // @ts-ignore
     dispatch(actions.common.deviceChange(data));
   });
 

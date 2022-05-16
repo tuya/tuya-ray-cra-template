@@ -132,3 +132,15 @@ export const initDevInfo = () => {
 export const getDevInfo = () => {
   return __deviceInfo;
 };
+
+ty.device.onDeviceInfoUpdated(_ => {
+  initDevInfo();
+});
+
+ty.device.onDpDataChange(_ => {
+  initDevInfo();
+});
+
+ty.device.onDeviceOnlineStatusUpdate(_ => {
+  initDevInfo();
+});
