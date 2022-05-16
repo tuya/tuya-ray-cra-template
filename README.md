@@ -1,15 +1,16 @@
-[English](README.md) | [简体中文](README_zh.md)
+
+[English](README.md) | 简体中文[](README_zh.md)
 
 
-## cra-template
+## Overview of `cra-template`
 
-This is the official TypeScript templates for [`Create Ray App`](https://developer.tuya.com/cn/ray/guide/tutorial).
+This topic describes the TypeScript templates used to [`Create Ray App`](https://developer.tuya.com/cn/ray/guide/tutorial).
 
-## Getting Started
+## Get started
 
-How to use the templates when creating a new app?
+Use the templates to create applications.
 
-For examples:
+Example:
 
 ```sh
 npx @ray-js/create-app my-app
@@ -22,19 +23,17 @@ or
 ```sh
 npm init @ray-js/app my-app
 ```
+## References
 
-## More
-
-For more information, please refer to:
+For more information, see:
 - [About Ray](https://developer.tuya.com/cn/ray)
-- [Getting Started](https://developer.tuya.com/cn/ray/guide/tutorial/start) – How to create a new app.
-- [User Guide](https://developer.tuya.com/cn/ray/guide) – How to develop apps bootstrapped with `Create Ray App`.
+- [Get Started](https://developer.tuya.com/cn/ray/guide/tutorial/start): how to create applications
+- [User Guide](https://developer.tuya.com/cn/ray/guide): how to develop applications bootstrapped with `Create Ray App`
 
+## Technical support
 
-## FAQ
-
-Welcome to [GitHub Issue](https://github.com/tuya/tuya-ray-cra-template/issues) to give us feedback on issues and get help
+You can use [GitHub Issue](https://github.com/tuya/tuya-ray-cra-template/issues) to give us feedback on any problems and we are ready to help you out.
 
 ## License
 
-[MIT License](LICENSE)
+For more information, see [MIT License](LICENSE).
