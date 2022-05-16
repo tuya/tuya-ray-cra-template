@@ -2,35 +2,23 @@
 import { handleActions } from 'redux-actions';
 import _ from 'lodash';
 import { panelConfig as defaultPanelConfig } from '@/config';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/partition';
 
-import { thingDpType } from '@/constant';
+import {
+  INITIALIZED_CONFIG,
+  INIT_BIC_CONFIG,
+  INIT_FUN_CONFIG,
+  INIT_IOT_CONFIG,
+  INIT_STATIC_PREFIX,
+  INIT_THING_MODEL,
+  RESPONSE_UPDATE_DP,
+  thingDpType,
+  TOGGLE_SHOW_MODEL,
+  UPDATE_MISC_CONFIG,
+  UPDATE_THING_MODEL,
+  DEVICE_INFO_CHANGE,
+  DEV_INFO_CHANGE,
+} from '@/constant';
 import { actions } from '../actions/common';
-
-const {
-  devInfoChange,
-  deviceChange,
-  responseUpdateDp,
-  // updateDp,
-  initStaticPrefix,
-  initIoTConfig,
-  initFunConfig,
-  initBicConfig,
-  updateMiscConfig,
-  initializedConfig,
-  // updateAppTheme,
-  // consoleChange,
-  // clearConsole,
-  initThingModel,
-  updateThingModel,
-  toggleShowModel,
-} = actions;
 
 export type Actions = {
   [K in keyof typeof actions]: ReturnType<typeof actions[K]>;
@@ -47,34 +35,35 @@ type UpdateDpStatePayload = Partial<DpState> & { [key: string]: DpValue };
 /**
  * reducers
  */
-const dpState = handleActions<DpState, UpdateDpStatePayload>(
-  {
-    [devInfoChange.toString()]: (state, action: Actions['devInfoChange']) => {
+
+const dpState = (state = {}, action) => {
+  switch (action.type) {
+    case DEV_INFO_CHANGE:
       return {
         ...state,
         ...action.payload.state,
       };
-    },
 
-    [responseUpdateDp.toString()]: (state, action) => ({
-      ...state,
-      ...action.payload,
-    }),
-  },
-  {} as DpState
-);
-
-type UpdateThingModelPayload = ty.device.OnReceivedThingModelMessageBody;
-
-const thingModel = handleActions<ThingModelInfo, UpdateThingModelPayload>(
-  {
-    [initThingModel.toString()]: (state, action) => {
+    case RESPONSE_UPDATE_DP:
       return {
         ...state,
         ...action.payload,
       };
-    },
-    [updateThingModel.toString()]: (state, action) => {
+    default:
+      return state;
+  }
+};
+
+type UpdateThingModelPayload = ty.device.OnReceivedThingModelMessageBody;
+
+const thingModel = (state = { services: [] }, action) => {
+  switch (action.type) {
+    case INIT_THING_MODEL:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case UPDATE_THING_MODEL: {
       const {
         payload: { type, payload },
       } = action;
@@ -153,69 +142,73 @@ const thingModel = handleActions<ThingModelInfo, UpdateThingModelPayload>(
         ...state,
         services: newServices,
       };
-    },
-  },
-  {} as ThingModelInfo
-);
+    }
+    default:
+      return state;
+  }
+};
 
 type ShowModalMap = Record<string, boolean>;
 type UpdateShowModal = { code: string; value: boolean };
 // 控制是否弹出事件弹框
-const showModal = handleActions<ShowModalMap, UpdateShowModal>(
-  {
-    [toggleShowModel.toString()]: (state, action: { payload: any }) => ({
-      ...state,
-      [action.payload.code]: action.payload.value,
-    }),
-  },
-  {}
-);
 
-const devInfo = handleActions<DevInfo>(
-  {
-    [devInfoChange.toString()]: (state, action) => ({
-      ...state,
-      ...action.payload,
-    }),
+const showModal = (state = {}, action: { payload: any; type: string }) => {
+  switch (action.type) {
+    case TOGGLE_SHOW_MODEL:
+      return {
+        ...state,
+        [action.payload.code]: action.payload.value,
+      };
+    default:
+      return state;
+  }
+};
 
-    [deviceChange.toString()]: (state, action) => ({
-      ...state,
-      ...action.payload,
-    }),
-  },
-  {} as DevInfo
-);
+const devInfo = (state = {}, action) => {
+  switch (action.type) {
+    case DEV_INFO_CHANGE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case DEVICE_INFO_CHANGE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
-type StaticPrefix = string;
+const staticPrefix = (state = '', action) => {
+  switch (action.type) {
+    case INIT_STATIC_PREFIX:
+      return action.payload;
 
-const staticPrefix = handleActions<StaticPrefix>(
-  {
-    [initStaticPrefix.toString()]: (state, action) => action.payload,
-  },
-  ''
-);
+    default:
+      return state;
+  }
+};
 
-const panelConfig = handleActions(
-  {
-    [initIoTConfig.toString()]: (state, action: Actions['initIoTConfig']) => {
+const panelConfig = (state = defaultPanelConfig, action) => {
+  switch (action.type) {
+    case INIT_IOT_CONFIG:
       return {
         ...state,
         iot: action.payload,
       };
-    },
-    [initBicConfig.toString()]: (state, action: Actions['initBicConfig']) => {
+    case INIT_BIC_CONFIG:
       return {
         ...state,
         bic: action.payload,
       };
-    },
-    [initFunConfig.toString()]: (state, action: Actions['initFunConfig']) => {
+    case INIT_FUN_CONFIG:
       return {
         ...state,
         fun: action.payload,
       };
-    },
-    [updateMiscConfig.toString()]: (state, action: Actions['updateMiscConfig']) => {
+    case UPDATE_MISC_CONFIG:
       return {
         ...state,
         misc: {
@@ -223,84 +216,15 @@ const panelConfig = handleActions(
           ...action.payload,
         },
       };
-    },
-    [initializedConfig.toString()]: state => {
+    case INITIALIZED_CONFIG:
       return {
         ...state,
         initialized: true,
       };
-    },
-  },
-  defaultPanelConfig
-);
-
-// 目前没有用到
-// const appTheme = handleActions(
-//   {
-//     [updateAppTheme.toString()]: (state, action) => ({
-//       ...state,
-//       ...action.payload,
-//     }),
-//   },
-//   {}
-// );
-
-// 目前没有用到
-// const formatLogs = (state: Logs, action: { payload: UpdateDpStatePayload }, send: boolean) => {
-//   const ret = Object.keys(action.payload).reduce((obj, p) => {
-//     const id = TYSdk.device.getDpIdByCode(p);
-//     return { ...obj, [id]: action.payload[p] };
-//   }, {});
-//   const strIds = JSON.stringify(ret, null, 2);
-//   const strCodes = JSON.stringify(action.payload, null, 2);
-//   const date = new Date();
-//   const time = `[${[
-//     date.getHours(),
-//     date.getMinutes(),
-//     date.getSeconds(),
-//     date.getMilliseconds(),
-//   ].join(':')}]`;
-//   const s = [{ strCodes, strIds, time, isSend: send }, ...state];
-//   return s.slice(0, 30);
-// };
-
-// let isSend = false;
-
-// interface Log {
-//   strCodes: string;
-//   strIds: string;
-//   time: string;
-//   isSend: boolean;
-// }
-
-// type Logs = Array<Log>;
-
-// const logs = handleActions<Logs, undefined | UpdateDpStatePayload | DevInfo>(
-//   {
-//     [consoleChange.toString()]: state => {
-//       isSend = true;
-//       return state;
-//     },
-
-//     [updateDp.toString()]: (state, action: Actions['updateDp']) => {
-//       isSend = true;
-//       return formatLogs(state, action, isSend);
-//     },
-
-//     [devInfoChange.toString()]: (state, action: Actions['devInfoChange']) => {
-//       const formatAction = { payload: action.payload.state };
-//       return formatLogs(state, formatAction, isSend);
-//     },
-
-//     [responseUpdateDp.toString()]: (state, action: Actions['responseUpdateDp']) => {
-//       isSend = false;
-//       return formatLogs(state, action, isSend);
-//     },
-
-//     [clearConsole.toString()]: () => [],
-//   },
-//   []
-// );
+    default:
+      return state;
+  }
+};
 
 export const reducers = {
   staticPrefix,

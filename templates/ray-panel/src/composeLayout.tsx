@@ -39,7 +39,9 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
 
   const onInit = (devInfo: DevInfo) => {
     try {
-      getOssUrl().then(staticPrefix => dispatch(actions.common.initStaticPrefix(staticPrefix)));
+      getOssUrl().then((staticPrefix: string) =>
+        dispatch(actions.common.initStaticPrefix(staticPrefix))
+      );
       // @ts-expect-error
       dispatch(actions.common.updateMiscConfig({ hasSwitch: !!devInfo.schema.switch }));
     } catch (error) {
@@ -94,7 +96,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
     dispatch(actions.common.deviceChange(data));
   });
 
-  ty.device.onDpDataChange(date => {
+  ty.device.onDpDataChange(data => {
     dispatch(actions.common.responseUpdateDp(data as any));
   });
 

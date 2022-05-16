@@ -122,7 +122,6 @@ export const initDevInfo = () => {
       deviceId: devId,
       success: deviceInfo => {
         __deviceInfo = deviceInfo;
-        console.log('----------------9999', __deviceInfo);
         resolve(null);
       },
       fail: console.log,
@@ -131,6 +130,5 @@ export const initDevInfo = () => {
 };
 
 export const getDevInfo = () => {
-  console.log('----------------88888', __deviceInfo);
   return __deviceInfo;
 };
