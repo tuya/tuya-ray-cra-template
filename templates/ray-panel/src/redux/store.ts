@@ -1,8 +1,7 @@
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
-import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { reducers as commonReducers } from './reducers/common';
 import { reducers as theme } from './reducers/theme';
-import { epics as commonEpics } from './epics';
+import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { isNative } from '@ray-js/env';
 
@@ -17,11 +16,11 @@ export type ReduxState = { [K in keyof Reducers]: ReturnType<Reducers[K]> };
 
 export const rootReducers = combineReducers(reducers);
 
-const allEpics = [...commonEpics];
+// const allEpics = [...commonEpics];
 
-export const rootEpics = combineEpics(...allEpics);
+// export const rootEpics = combineEpics(...allEpics);
 
-const epicMiddleware = createEpicMiddleware();
+// const epicMiddleware = createEpicMiddleware();
 
 const isDebuggingInChrome = isNative && global.__DEV__ && !!window.navigator.userAgent;
 const logger = createLogger({
@@ -30,14 +29,14 @@ const logger = createLogger({
   duration: true,
 });
 
-const middleware = isDebuggingInChrome ? [epicMiddleware, logger] : [epicMiddleware];
+const middleware = isDebuggingInChrome ? [thunk, logger] : [thunk];
 
 function configureStore(initialState?: Partial<ReduxState>) {
   const appliedMiddleware = applyMiddleware(...middleware);
 
   const store = createStore(rootReducers, initialState, compose(appliedMiddleware));
 
-  epicMiddleware.run(rootEpics);
+  // epicMiddleware.run(rootEpics);
   return store;
 }
 
