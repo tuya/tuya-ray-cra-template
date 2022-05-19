@@ -1,6 +1,6 @@
 {
-  "name": "simple-app",
-  "version": "0.1.0",
+  "name": "app",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "@ray-js/cli": "latest",
