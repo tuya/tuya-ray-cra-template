@@ -1,8 +1,8 @@
 import { get } from 'lodash';
-import { useSelector as useSelectorBase, shallowEqual } from 'react-redux';
+import { shallowEqual, useSelector as useSelectorBase } from 'react-redux';
 import { actions as CommonActions } from './actions/common';
 import { actions as theme } from './actions/theme';
-import { store, ReduxState } from './store';
+import { ReduxState, store } from './store';
 
 const { width, height } = { width: 375, height: 664 };
 const actions = {

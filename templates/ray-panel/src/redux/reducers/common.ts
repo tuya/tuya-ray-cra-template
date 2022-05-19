@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { handleActions } from 'redux-actions';
-import _ from 'lodash';
 import { panelConfig as defaultPanelConfig } from '@/config';
-
 import {
+  DEVICE_INFO_CHANGE,
+  DEV_INFO_CHANGE,
   INITIALIZED_CONFIG,
   INIT_BIC_CONFIG,
   INIT_FUN_CONFIG,
@@ -15,9 +14,8 @@ import {
   TOGGLE_SHOW_MODEL,
   UPDATE_MISC_CONFIG,
   UPDATE_THING_MODEL,
-  DEVICE_INFO_CHANGE,
-  DEV_INFO_CHANGE,
 } from '@/constant';
+import _ from 'lodash';
 import { actions } from '../actions/common';
 
 export type Actions = {
