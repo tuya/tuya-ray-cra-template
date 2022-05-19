@@ -1,5 +1,4 @@
 import { getDevInfo } from '@/api';
-import { CompList } from '@/components';
 import Strings from '@/i18n';
 import { useSelector } from '@/redux';
 import NotifyPng from '@/res/notify.png';
@@ -72,10 +71,6 @@ export default function TYLink() {
           },
           abilityId,
         } = property;
-        const element = _.get(
-          CompList,
-          `prop.${accessMode === 'ro' ? accessMode : 'rwOrWr'}.${type}`
-        );
 
         // 故障组件
         return {
@@ -102,10 +97,6 @@ export default function TYLink() {
       });
       const actionsComp = actions.map(action => {
         const { abilityId, code } = action;
-        const element = CompList?.action;
-        if (!element) {
-          return null;
-        }
         return {
           title_name: code ?? Strings.getLang('func_name'),
           image: mode,
@@ -116,10 +107,6 @@ export default function TYLink() {
       });
       const eventComp = events.map(event => {
         const { abilityId, code } = event;
-        const element = CompList?.event;
-        if (!element) {
-          return null;
-        }
         return {
           title_name: code ?? Strings.getLang('func_name'),
           image: NotifyPng,

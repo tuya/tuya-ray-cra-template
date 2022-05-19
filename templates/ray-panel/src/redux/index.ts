@@ -4,7 +4,6 @@ import { actions as CommonActions } from './actions/common';
 import { actions as theme } from './actions/theme';
 import { ReduxState, store } from './store';
 
-const { width, height } = { width: 375, height: 664 };
 const actions = {
   common: CommonActions,
   theme,

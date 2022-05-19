@@ -4,10 +4,6 @@ import { router } from 'ray';
 import React from 'react';
 import styles from './index.module.less';
 
-const EXPLORER_UIID_MAP = {
-  component: '0000017aud',
-};
-
 export function Home() {
   const devInfo = useSelector(state => state.devInfo);
   const data = [
