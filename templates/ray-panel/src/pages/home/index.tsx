@@ -1,209 +1,212 @@
-import React from 'react';
-import _ from 'lodash';
-
-
-import { CompList } from '@/components';
 import { useSelector } from '@/redux';
-import { scaleNumber, transformData } from '@/utils';
-import NotifyPng from '@/res/notify.png';
-import { getDevInfo } from '@/api';
-import { View, ScrollView, Modal, Motion, Text } from '@ray-js/components';
-import Strings from '@/i18n';
-import { setNavigationBarTitle } from '@ray-js/api';
-import { Notification } from '@ray-js/ray-components-plus';
+import { showNotification } from '@ray-js/api';
+import { Button, ScrollView, Text, View } from '@ray-js/components';
+import { router } from 'ray';
+import React from 'react';
+import styles from './index.module.less';
 
-import mode from '../../res/mode.png';
+const EXPLORER_UIID_MAP = {
+  component: '0000017aud',
+};
 
-export default function Home() {
-  const thingModel = useSelector(state => state.thingModel);
+export function Home() {
   const devInfo = useSelector(state => state.devInfo);
-  // 最多显示 4 个故障弹框
-  const [show, setShow] = React.useState([true, true, true, true]);
-  const { services = [] } = thingModel;
+  const data = [
+    { key: 'page1', text: '查看公版子 UI 配置' },
+    { key: 'page3', text: '查看其他通用配置' },
+    { key: 'page4', text: '查看路由信息' },
+    { key: 'page5', text: '网络资源支持多区域' },
+    { key: 'page6', text: '设备dp点' },
+    {
+      key: 'tylink',
+      text: 'tuyalink协议设备移步至此',
+      onPress: () => {
+        router.push('/tuyalink');
+      },
+    },
+    {
+      key: 'getAppInfo',
+      text: 'getAppInfo',
+      onPress: () => {
+        ty.getAppInfo({
+          success: info => {
+            console.log(info);
+          },
+          fail: error => console.log(error),
+        });
+      },
+    },
+    {
+      key: 'back',
+      text: '获取手机信息',
+      onPress: () => {
+        ty.getSystemInfo({
+          success: info => {
+            console.log('getSystemInfo >>', info);
+          },
+          fail: error => {
+            console.log(error);
+          },
+        });
+      },
+    },
 
-  React.useEffect(() => {
-    const { name } = getDevInfo();
-    setNavigationBarTitle({ title: name });
-  }, []);
+    {
+      key: 'onNetworkStatusChange',
+      text: 'onNetworkStatusChange',
+      onPress: () => {
+        ty.onNetworkStatusChange(res => console.log(res, 'onNetworkStatusChange'));
+      },
+    },
+    {
+      key: 'offNetworkStatusChange',
+      text: 'offNetworkStatusChange',
+      onPress: () => {
+        ty.offNetworkStatusChange(res => console.log(res, 'offNetworkStatusChange'));
+      },
+    },
+    {
+      key: 'onBluetoothAdapterStateChange',
+      text: 'onBluetoothAdapterStateChange',
+      onPress: () => {
+        ty.onBluetoothAdapterStateChange(res => console.log(res, 'onBluetoothAdapterStateChange'));
+      },
+    },
+    {
+      key: 'offBluetoothAdapterStateChange',
+      text: 'offBluetoothAdapterStateChange',
+      onPress: () => {
+        ty.offBluetoothAdapterStateChange(res =>
+          console.log(res, 'offBluetoothAdapterStateChange')
+        );
+      },
+    },
+    {
+      key: 'gotoDpAlarm',
+      text: 'gotoDpAlarm',
+      onPress: () => {
+        ty.device.openTimerPage({
+          deviceId: devInfo.devId,
+          category: 'schedule',
+          data: [
+            {
+              dpId: '18',
+              dpName: '开关1',
+              selected: 0,
+              rangeKeys: [true, false],
+              rangeValues: ['开启', '关闭'],
+            },
+          ],
+        });
+      },
+    },
+    {
+      key: 'bluetoothIsPowerOn',
+      text: 'bluetoothIsPowerOn',
+      onPress: () => {
+        ty.device.bluetoothIsPowerOn({
+          success: res => console.log(res, 'success'),
+          fail: res => console.log(res, 'fail'),
+        });
+      },
+    },
+    {
+      key: '下发dp点',
+      text: '下发dp点',
+      onPress: () => {
+        ty.device.publishDps({
+          deviceId: devInfo.devId,
+          dps: { '1': true, '2': false }, // {'dpid': dpValue, '2': false}
+          mode: 2,
+          pipelines: [],
+          options: {}, // 0，静音； 1，震动；2,声音； 3，震动声音
+          success: () => console.log('success'),
+          fail: d => {
+            console.log('-----返回结果错误?', d);
+          },
+        });
+      },
+    },
+    {
+      key: 'getDeviceInfo',
+      text: 'getDeviceInfo',
+      onPress: () => {
+        ty.device.getDeviceInfo({
+          deviceId: devInfo.devId,
+          success: info => {
+            console.log(info);
+          },
+          fail: error => console.log(error),
+        });
+      },
+    },
+    {
+      key: 'Router',
+      text: '去设备详情',
+      onPress: () => {
+        const { devId, groupId } = devInfo;
+        ty.device.openDeviceDetailPage({
+          deviceId: devId,
+          groupId,
+          success: () => console.log('success'),
+          fail: error => console.log(error),
+        });
+      },
+    },
+    {
+      key: 'Notification',
+      text: 'showNotification',
+      onPress: () => {
+        showNotification({ message: '这是一个 Notification' });
+      },
+    },
 
-  const renderItem = ({ value, label }) => {
-    const labelValueArr = parseInt(value ?? 0, 10)
-      .toString(2)
-      .split('');
-    if (label && label.length > 0) {
-      return label.map((item, idx) => {
-        if (labelValueArr[idx] === '1') {
-          return (
-            <Modal position="top" overlay={false} show={show[idx]}>
-              <Motion.PushDown
-                show={show[idx]}
-                style={{
-                  position: 'absolute',
-                  top: `${(idx + 1) * 20 + idx * 30}px`,
-                }}
-              >
-                <Notification
-                  icon="warning"
-                  onClose={() => {
-                    const newShow = [...show];
-                    newShow[idx] = false;
-                    setShow(newShow);
-                  }}
-                >
-                  {item}
-                </Notification>
-              </Motion.PushDown>
-            </Modal>
-          );
-        }
-        return null;
-      });
-    }
-    return null;
-  };
+    {
+      key: 'Toast',
+      text: 'showToast',
+      onPress: () => {
+        ty.showToast({
+          title: '这是一个toast',
+        });
+      },
+    },
+    {
+      key: 'Loading',
+      text: 'showLoading',
+      onPress: () => {
+        ty.showLoading({
+          title: '这是一个Loading',
+        });
 
-  if (!services.length) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
-        <Text>{Strings.getLang('thing_empty')}</Text>
-      </View>
-    );
-  }
+        setTimeout(() => {
+          ty.hideLoading();
+        }, 10000);
+      },
+    },
+  ];
 
   return (
-    <ScrollView
-      scrollY
-      style={{
-        backgroundColor: '#f2f4f6',
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        paddingTop: '20rpx',
-        paddingBottom: '40rpx',
-        height: '100vh',
-      }}
-    >
-      {_.flatten(
-        services.map(service => {
-          const { properties = [], actions = [], events = [] } = service;
-          const propertiesComp = properties.map(property => {
-            const {
-              accessMode,
-              code,
-              value,
-              typeSpec: {
-                type,
-                range,
-                unit,
-                min,
-                max,
-                scale,
-                step,
-                maxlen,
-                label,
-                properties: structureProperties,
-                elementTypeSpec,
-              },
-              abilityId,
-            } = property;
-            const element = _.get(
-              CompList,
-              `prop.${accessMode === 'ro' ? accessMode : 'rwOrWr'}.${type}`
-            );
-
-            // 故障组件
-
-            if (type === 'bitmap') {
-              return renderItem({ value, label });
-            }
-
-            if (
-              !element ||
-              (type === 'enum' && !range) ||
-              (type === 'array' &&
-                (elementTypeSpec?.type === 'bitmap' ||
-                  elementTypeSpec?.type === 'date' ||
-                  elementTypeSpec?.type === 'enum')) ||
-              (type === 'struct' &&
-                (elementTypeSpec?.type === 'bitmap' || elementTypeSpec?.type === 'date'))
-            ) {
-              return null;
-            }
-
-            return (
-              <View
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: '20rpx',
-                }}
-              >
-                {React.createElement(element, {
-                  thingModelDp: property,
-                  key: abilityId,
-                  dataSource: range,
-                  image: mode,
-                  title_name: code ?? Strings.getLang('func_name'),
-                  unit,
-                  scale,
-                  param_value: type === 'value' ? scaleNumber(scale, value ?? min) : value,
-                  min: scaleNumber(scale, min),
-                  max: scaleNumber(scale, max),
-                  step: scaleNumber(scale, step),
-                  type,
-                  maxlen,
-                  structureSource: transformData(
-                    type,
-                    _.omit(structureProperties, ['bitmap', 'time']),
-                    value
-                  ),
-                  devId: devInfo?.devId,
-                })}
-              </View>
-            );
-          });
-          const actionsComp = actions.map(action => {
-            const { abilityId, code } = action;
-            const element = CompList?.action;
-            if (!element) {
-              return null;
-            }
-            return (
-              <View
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: '20rpx',
-                }}
-              >
-                {React.createElement(element, {
-                  title_name: code ?? Strings.getLang('func_name'),
-                  image: mode,
-                  thingModelDp: action,
-                  devId: devInfo?.devId,
-                  key: abilityId,
-                })}
-              </View>
-            );
-          });
-          const eventComp = events.map(event => {
-            const { abilityId, code } = event;
-            const element = CompList?.event;
-            if (!element) {
-              return null;
-            }
-            return React.createElement(element, {
-              title_name: code ?? Strings.getLang('func_name'),
-              image: NotifyPng,
-              thingModelDp: event,
-              key: abilityId,
-            });
-          });
-          return propertiesComp.concat(actionsComp, eventComp);
-        })
-      )}
+    <ScrollView className={styles.view}>
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        {data.map(({ key, text, onPress }) => {
+          return (
+            <Button
+              className={styles.button}
+              key={key}
+              onClick={
+                onPress ||
+                (() => {
+                  router.push(`/common/${key!}/index`);
+                })
+              }
+            >
+              <Text className={styles.bTitle}>{text}</Text>
+            </Button>
+          );
+        })}
+      </View>
     </ScrollView>
   );
 }
+
+export default Home;

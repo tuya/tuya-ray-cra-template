@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Text } from '@ray-js/components';
-import _ from 'lodash';
-import { detailedDiff } from 'deep-object-diff';
-import React, { Component } from 'react';
-import { connect, Provider } from 'react-redux';
-import Strings from '@/i18n';
-import { ReduxState } from '@/redux/store';
-import { actions, store } from '@/redux';
-import defaultUiConfig from '@/config/panelConfig/iot';
+import { getOssUrl, getUiIdI18N, initDevInfo } from '@/api';
 import { Connect } from '@/components';
-import { getOssUrl, getUiIdI18N, getDeviceThingDataSource, initDevInfo } from '@/api';
+import defaultUiConfig from '@/config/panelConfig/iot';
+import Strings from '@/i18n';
+import { actions, store } from '@/redux';
+import { ReduxState } from '@/redux/store';
+import { Text } from '@ray-js/components';
+import { CloudConfig, Config, withConfig } from '@ray-js/ray-panel-standard-hoc';
 import { Theme } from '@ray-js/ray-panel-theme';
 import { JsonUtils } from '@ray-js/ray-panel-utils';
-import { CloudConfig, Config, withConfig } from '@ray-js/ray-panel-standard-hoc';
-import { thingDpType } from '@/constant';
+import { detailedDiff } from 'deep-object-diff';
+import _ from 'lodash';
+import React, { Component } from 'react';
+import { connect, Provider } from 'react-redux';
+import { initThingModel } from './utils/tuyalink';
 
 const { parseJSON } = JsonUtils;
 
@@ -92,58 +92,6 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
     defaultUiConfig,
   })(NavigatorLayout);
 
-  ty.device.onDeviceInfoUpdated(data => {
-    // @ts-ignore
-    dispatch(actions.common.deviceChange(data));
-  });
-
-  ty.device.onDpDataChange(data => {
-    dispatch(actions.common.responseUpdateDp(data as any));
-  });
-
-  // 监听物模型消息推送
-  ty.device.onReceivedThingModelMessage(body => {
-    // @ts-expect-error
-    console.log('OnReceivedThingModelMessageBody 调用成功', JSON.parse(body));
-    const message = typeof body === 'string' ? JSON.parse(body) : body;
-    // 事件弹窗
-    if (message?.type === thingDpType.event) {
-      dispatch(actions.common.toggleShowModel({ code: message?.payload?.eventCode, value: true }));
-    }
-    // 动作弹窗
-    if (message?.type === thingDpType.action) {
-      dispatch(actions.common.toggleShowModel({ code: message?.payload?.actionCode, value: true }));
-    }
-    // 属性
-    dispatch(actions.common.updateThingModel(message));
-  });
-
-  const initThingModel = devId => {
-    getDeviceThingDataSource().then(data => {
-      dispatch(actions.common.initThingModel(data));
-    });
-    // 订阅接受物模型推送消息
-    ty.device.subscribeReceivedThingModelMessage({
-      devId,
-      success: () => console.log('subscribeReceivedThingModelMessage 调用成功'),
-      fail: () => console.log('subscribeReceivedThingModelMessage 调用失败'),
-    });
-    // 订阅设备移除事件
-    ty.device.subscribeDeviceRemoved({
-      deviceId: devId,
-      success: () => {
-        console.log('subscribeDeviceRemoved 调用成功');
-        // 监听删除设备事件
-        ty.device.onDeviceRemoved(body => {
-          console.log('OnDeviceRemoved 调用成功', body);
-          // 退出小程序容器
-          ty.exitMiniProgram({});
-        });
-      },
-      fail: () => console.log('subscribeDeviceRemoved 调用失败'),
-    });
-  };
-
   return class PanelComponent extends Component<Props, State> {
     constructor(props: Props) {
       super(props);
@@ -195,6 +143,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
 
       if (props && props.devInfo && props.devInfo.devId) {
         dispatch(actions.common.devInfoChange(props.devInfo));
+        // 非 tuyalink 协议设备可移除该逻辑
         initThingModel(props.devInfo.devId);
       }
 
