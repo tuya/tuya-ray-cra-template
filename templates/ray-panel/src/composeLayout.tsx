@@ -137,7 +137,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
         ty.device.onDeviceRemoved(body => {
           console.log('OnDeviceRemoved 调用成功', body);
           // 退出小程序容器
-          ty.mini.exitMiniProgram({});
+          ty.exitMiniProgram({});
         });
       },
       fail: () => console.log('subscribeDeviceRemoved 调用失败'),
