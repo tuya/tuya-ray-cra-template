@@ -1,5 +1,4 @@
 import { useSelector } from '@/redux';
-import { showNotification } from '@ray-js/api';
 import { Button, ScrollView, Text, View } from '@ray-js/components';
 import { router } from 'ray';
 import React from 'react';
@@ -153,14 +152,6 @@ export function Home() {
         });
       },
     },
-    {
-      key: 'Notification',
-      text: 'showNotification',
-      onPress: () => {
-        showNotification({ message: '这是一个 Notification' });
-      },
-    },
-
     {
       key: 'Toast',
       text: 'showToast',
