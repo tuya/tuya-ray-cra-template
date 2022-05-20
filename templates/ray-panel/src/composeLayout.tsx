@@ -96,11 +96,12 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
     constructor(props: Props) {
       super(props);
       this.state = {
-        isI18NLoaded: false,
+        isI18NLoaded: true,
       };
     }
 
     async onLaunch(object: any) {
+      console.log('app onLaunch: ', object);
       await initDevInfo();
       this.init();
       console.log('app onLaunch: ', object);
@@ -108,6 +109,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
 
     onShow(object: any) {
       console.log('app onShow: ', object);
+      console.log('launchOptions: ', ty.getLaunchOptionsSync());
     }
 
     onHide(object: any) {
@@ -136,21 +138,21 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
        * 因此需要针对二级页面单独拉取其 uiId 并合并至当前项目多语言中
        */
       const { props } = this;
-      const ui = props?.devInfo?.ui?.split('_')[0];
-      const isSubUiId = ui !== props?.devInfo?.uiId;
-      const isI18NLoaded = !isSubUiId;
-      this.setState({ isI18NLoaded });
+      // const ui = props?.devInfo?.ui?.split('_')[0];
+      // const isSubUiId = ui !== props?.devInfo?.uiId;
+      // const isI18NLoaded = !isSubUiId;
+      // this.setState({ isI18NLoaded: isI18NLoaded });
 
       if (props && props.devInfo && props.devInfo.devId) {
         dispatch(actions.common.devInfoChange(props.devInfo));
         // 非 tuyalink 协议设备可移除该逻辑
-        initThingModel(props.devInfo.devId);
+        // initThingModel(props.devInfo.devId);
       }
 
-      if (isI18NLoaded) {
-        return;
-      }
-      this.applySubUiIDAddedI18N();
+      // if (isI18NLoaded) {
+      //   return;
+      // }
+      // this.applySubUiIDAddedI18N();
     }
 
     /**
@@ -192,7 +194,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
       return (
         <Provider store={store}>
           <ThemeContainer>
-            {isI18NLoaded && (
+            {isI18NLoaded && devInfo && (
               <NavigatorLayoutContainer devInfo={devInfo} extraInfo={extraInfo} {...this.props} />
             )}
           </ThemeContainer>
