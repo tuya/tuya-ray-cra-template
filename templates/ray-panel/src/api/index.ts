@@ -7,7 +7,10 @@ export const getOssUrl = () => {
       version: '1.0',
       postData: {},
       success: response => resolve(response),
-      fail: error => reject(error),
+      fail: error => {
+        console.error(error);
+        reject(error);
+      },
     });
   });
 };
