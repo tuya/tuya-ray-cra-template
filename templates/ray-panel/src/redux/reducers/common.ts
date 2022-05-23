@@ -10,12 +10,10 @@ import {
   INIT_STATIC_PREFIX,
   INIT_THING_MODEL,
   RESPONSE_UPDATE_DP,
-  thingDpType,
   TOGGLE_SHOW_MODEL,
   UPDATE_MISC_CONFIG,
   UPDATE_THING_MODEL,
 } from '@/constant';
-import _ from 'lodash';
 import { actions } from '../actions/common';
 
 export type Actions = {
@@ -52,8 +50,6 @@ const dpState = (state = {}, action) => {
   }
 };
 
-type UpdateThingModelPayload = ty.device.OnReceivedThingModelMessageBody;
-
 const thingModel = (state = { services: [] }, action) => {
   switch (action.type) {
     case INIT_THING_MODEL:
@@ -69,76 +65,10 @@ const thingModel = (state = { services: [] }, action) => {
         return state;
       }
       const { services = [] } = state;
-      const newServices = services.map(service => {
-        const { properties = [], actions: actionsModel = [], events = [] } = service;
-        if (type === thingDpType.prop) {
-          const data = payload;
-          const newProperties = _.assign([], properties);
-
-          _.keys(data).forEach(key => {
-            properties.some((prop, index) => {
-              if (prop.code === key) {
-                _.set(newProperties[index], 'value', data[key]?.value);
-                return true;
-              }
-              return false;
-            });
-          });
-
-          return { properties: newProperties, actions: actionsModel, events };
-        }
-
-        if (type === thingDpType.action) {
-          const data = payload;
-          const { actionCode } = data;
-          const newAction = _.assign([], actionsModel);
-          actionsModel.some((actionItem, index) => {
-            if (actionItem.code === actionCode) {
-              const newOutputParams = actionItem.outputParams.map((params: any) => {
-                if (_.keys(data?.outputParams || {}).includes(params.code)) {
-                  return _.merge(params, {
-                    value: data?.outputParams?.[params.code],
-                  });
-                }
-                return params;
-              });
-              _.set(newAction[index], 'outputParams', newOutputParams);
-              return true;
-            }
-            return false;
-          });
-
-          return { properties, actions: newAction, events };
-        }
-
-        if (type === thingDpType.event) {
-          const data = payload;
-          const { eventCode } = data;
-          const newEvent = _.assign([], events);
-          events.some((eventItem, index) => {
-            if (eventItem.code === eventCode) {
-              const newOutputParams = eventItem.outputParams.map((params: any) => {
-                if (_.keys(data?.outputParams || {}).includes(params.code)) {
-                  return _.merge(params, {
-                    value: data?.outputParams?.[params.code],
-                  });
-                }
-                return params;
-              });
-              _.set(newEvent[index], 'outputParams', newOutputParams);
-              return true;
-            }
-            return false;
-          });
-          return { properties, actions: actionsModel, events: newEvent };
-        }
-
-        return service;
-      });
 
       return {
         ...state,
-        services: newServices,
+        services,
       };
     }
     default:
