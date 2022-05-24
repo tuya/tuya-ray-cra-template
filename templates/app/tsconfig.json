@@ -16,8 +16,7 @@
     "jsx": "react",
     "paths": {
       "ray": ["./.ray"],
-      "@/*": ["./src/*"],
-      "@ray-js/*": ["../packages/*/src"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src/**/*.*", ".ray/**/*.*", "typings"],
