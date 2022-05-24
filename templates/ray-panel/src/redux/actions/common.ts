@@ -1,4 +1,6 @@
 import {
+  DEVICE_INFO_CHANGE,
+  DEV_INFO_CHANGE,
   INITIALIZED_CONFIG,
   INIT_BIC_CONFIG,
   INIT_FUN_CONFIG,
@@ -9,11 +11,7 @@ import {
   TOGGLE_SHOW_MODEL,
   UPDATE_MISC_CONFIG,
   UPDATE_THING_MODEL,
-  DEV_INFO_CHANGE,
-  DEVICE_INFO_CHANGE,
 } from '@/constant';
-import _ from 'lodash';
-import { createAction } from 'redux-actions';
 
 /**
  * actions
