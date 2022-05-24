@@ -1,9 +1,9 @@
-import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import { isNative } from '@ray-js/env';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 import { reducers as commonReducers } from './reducers/common';
 import { reducers as theme } from './reducers/theme';
-import thunk from 'redux-thunk';
-import { createLogger } from 'redux-logger';
-import { isNative } from '@ray-js/env';
 
 const reducers = {
   ...commonReducers,

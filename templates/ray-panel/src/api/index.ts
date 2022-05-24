@@ -1,3 +1,4 @@
+import { store, actions as ReduxActions } from '@/redux';
 // 获取静态资源域名
 export const getOssUrl = () => {
   return new Promise((resolve, reject) => {
@@ -6,7 +7,10 @@ export const getOssUrl = () => {
       version: '1.0',
       postData: {},
       success: response => resolve(response),
-      fail: error => reject(error),
+      fail: error => {
+        console.error(error);
+        reject(error);
+      },
     });
   });
 };
@@ -26,6 +30,46 @@ export const getUiIdI18N = (uiId: string): Promise<Record<string, any>> => {
   });
 };
 
+// 本地化缓存 deviceInfo 方便随时调用
+let __deviceInfo = null;
+export const initDevInfo = () => {
+  const { deviceId: devId } = ty.getLaunchOptionsSync().query;
+  return new Promise(resolve => {
+    ty.device.getDeviceInfo({
+      deviceId: devId,
+      success: deviceInfo => {
+        __deviceInfo = deviceInfo;
+        resolve(null);
+      },
+      fail: console.log,
+    });
+  });
+};
+
+export const getDevInfo = () => {
+  return __deviceInfo;
+};
+
+/// 设备状态监听
+ty.device.onDeviceInfoUpdated(data => {
+  const { dispatch } = store;
+  initDevInfo();
+  // @ts-ignore
+  dispatch(ReduxActions.common.deviceChange(data));
+});
+
+ty.device.onDpDataChange(data => {
+  const { dispatch } = store;
+  initDevInfo();
+  dispatch(ReduxActions.common.responseUpdateDp(data as any));
+});
+
+ty.device.onDeviceOnlineStatusUpdate(_ => {
+  initDevInfo();
+});
+
+// tuyalink 协议内容
+// 非 tuyalink 协议设备可移除该逻辑
 // 获取物模型信息
 export const getDeviceThingDataSource = (): Promise<any> => {
   const { deviceId: devId } = ty.getLaunchOptionsSync().query;
@@ -113,34 +157,3 @@ export const publishActionDpData = (payload: {
     });
   });
 };
-
-let __deviceInfo = null;
-export const initDevInfo = () => {
-  const { deviceId: devId } = ty.getLaunchOptionsSync().query;
-  return new Promise(resolve => {
-    ty.device.getDeviceInfo({
-      deviceId: devId,
-      success: deviceInfo => {
-        __deviceInfo = deviceInfo;
-        resolve(null);
-      },
-      fail: console.log,
-    });
-  });
-};
-
-export const getDevInfo = () => {
-  return __deviceInfo;
-};
-
-ty.device.onDeviceInfoUpdated(_ => {
-  initDevInfo();
-});
-
-ty.device.onDpDataChange(_ => {
-  initDevInfo();
-});
-
-ty.device.onDeviceOnlineStatusUpdate(_ => {
-  initDevInfo();
-});

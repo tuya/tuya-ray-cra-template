@@ -1,18 +1,21 @@
 export const web = {
   backgroundColor: '#f2f4f6',
-  // navigationBarTitleText: 'Ray 基础组件',
+  navigationBarTitleText: 'Ray 面板模板',
 };
 
 export const wechat = {
   backgroundColor: '#f2f4f6',
-  // navigationBarTitleText: 'Ray 基础组件',
+  navigationBarTitleText: 'Ray 面板模板',
 };
 
 export const tuya = {
-  disableScroll: true,
-  enablePullDownRefresh: false,
+  backgroundColor: '#f2f4f6',
+  navigationBarTitleText: 'Ray 面板模板',
 };
 
 export const native = {
-  backgroundColor: '#f2f4f6',
+  backgroundColor: 'transparent',
+  isBleOfflineOverlay: false,
+  useSafeAreaView: true,
+  navigationBarTitleText: 'Ray 面板模板',
 };

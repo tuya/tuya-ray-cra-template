@@ -27,7 +27,7 @@
     "@tuya-miniapp/ty-kit": "^2.0.7",
     "deep-object-diff": "^1.1.0",
     "react-native": "0.59.10",
-    "react-redux": "^8.0.1",
+    "react-redux": "^7.2.1",
     "redux": "^4.1.2",
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",
