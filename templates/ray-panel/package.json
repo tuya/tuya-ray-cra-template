@@ -9,7 +9,8 @@
     "start:native": "ray start -t native --verbose",
     "start:tuya": "ray start -t tuya --verbose",
     "build:native": "ray build -t native --verbose",
-    "build:tuya": "ray build -t tuya --verbose"
+    "build:tuya": "ray build -t tuya --verbose",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@ray-js/components": "latest",
@@ -45,6 +46,7 @@
     "@types/redux-logger": "^3.0.9",
     "compressing": "^1.5.1",
     "core-js": "^3.19.1",
+    "patch-package": "^6.4.7",
     "eslint-config-tuya-panel": "^0.4.1",
     "eslint-plugin-literal-check": "^0.1.2",
     "eslint-plugin-prettier": "^3.0.1",
