@@ -1,4 +1,3 @@
-import { getOtherUIValue, getUIValue } from '@ray-js/ray-panel-standard-hoc/lib/withUIConfig/utils';
 import { shallowEqual, useSelector as useSelectorBase } from 'react-redux';
 import { actions as CommonActions } from './actions/common';
 import { actions as theme } from './actions/theme';
@@ -15,19 +14,4 @@ export function useSelector<TSelected>(
   equalityFn?: (left: TSelected, right: TSelected) => boolean
 ) {
   return useSelectorBase<ReduxState, TSelected>(selector, equalityFn || shallowEqual);
-}
-
-export function useIoTUIValue(key: string, value?: string): string {
-  const iotConfig = useSelector(state => state.panelConfig.iot);
-  return getUIValue(iotConfig, key, value);
-}
-
-export function useIoTOtherUIValue(key: string, value?: string): string {
-  const iotConfig = useSelector(state => state.panelConfig.iot);
-  return getOtherUIValue(iotConfig, key, value);
-}
-
-export function getIotUIValue(key: string, value?: string): string {
-  const iotConfig = store.getState().panelConfig.iot;
-  return getUIValue(iotConfig, key, value);
 }

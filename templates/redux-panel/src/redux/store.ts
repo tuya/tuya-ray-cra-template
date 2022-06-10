@@ -16,12 +16,6 @@ export type ReduxState = { [K in keyof Reducers]: ReturnType<Reducers[K]> };
 
 export const rootReducers = combineReducers(reducers);
 
-// const allEpics = [...commonEpics];
-
-// export const rootEpics = combineEpics(...allEpics);
-
-// const epicMiddleware = createEpicMiddleware();
-
 const isDebuggingInChrome = isNative && global.__DEV__ && !!window.navigator.userAgent;
 const logger = createLogger({
   predicate: () => isDebuggingInChrome,
@@ -35,8 +29,6 @@ function configureStore(initialState?: Partial<ReduxState>) {
   const appliedMiddleware = applyMiddleware(...middleware);
 
   const store = createStore(rootReducers, initialState, compose(appliedMiddleware));
-
-  // epicMiddleware.run(rootEpics);
   return store;
 }
 

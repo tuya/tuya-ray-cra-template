@@ -19,7 +19,6 @@
     "@ray-js/location-native": "latest",
     "@ray-js/panel-components": "latest",
     "@ray-js/ray-components-plus": "latest",
-    "@ray-js/ray-panel-standard-hoc": "latest",
     "@ray-js/ray-panel-wrapper": "latest",
     "@tuya-miniapp/base-kit": "^2.1.2",
     "@tuya-miniapp/device-kit": "^2.1.6",

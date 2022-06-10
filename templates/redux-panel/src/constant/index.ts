@@ -1,23 +1,4 @@
-export const thingDpType = {
-  prop: 0,
-  action: 1,
-  event: 2,
-};
-
 export const DEV_INFO_CHANGE = '_DEVINFOCHANGE_';
 export const DEVICE_INFO_CHANGE = '_DEVICEINFOCHANGE_';
 export const RESPONSE_UPDATE_DP = 'RESPONSE_UPDATE_DP';
 export const CHANGE_DP = 'CHANGE_DP';
-export const INIT_STATIC_PREFIX = 'INIT_STATIC_PREFIX';
-export const INIT_IOT_CONFIG = 'INIT_IOT_CONFIG';
-export const INIT_FUN_CONFIG = 'INIT_FUN_CONFIG';
-export const INIT_BIC_CONFIG = 'INIT_BIC_CONFIG';
-export const UPDATE_MISC_CONFIG = 'UPDATE_MISC_CONFIG';
-export const INITIALIZED_CONFIG = 'INITIALIZED_CONFIG';
-export const UPDATE_APP_THEME_COLOR = 'UPDATE_APP_THEME_COLOR';
-export const CONSOLECHNAGE = 'CONSOLECHNAGE';
-export const CLEARCONSOLE = 'CLEARCONSOLE';
-
-export const INIT_THING_MODEL = 'INIT_THING_MODEL';
-export const UPDATE_THING_MODEL = 'UPDATE_THING_MODEL';
-export const TOGGLE_SHOW_MODEL = 'TOGGLE_SHOW_MODEL';

@@ -7,16 +7,7 @@ export const wechat = {
     navigationBarBackgroundColor: '#f2f4f6',
     navigationBarTextStyle: 'black',
   },
-  pages: [
-    'pages/home/index',
-    'pages/tuyalink/index',
-    'pages/common/page1/index',
-    'pages/common/page2/index',
-    'pages/common/page3/index',
-    'pages/common/page4/index',
-    'pages/common/page5/index',
-    'pages/common/page6/index',
-  ],
+  pages: ['pages/home/index', 'pages/common/page4/index', 'pages/common/page6/index'],
 };
 export const tuya = {
   window: {
@@ -25,22 +16,7 @@ export const tuya = {
     navigationBarBackgroundColor: '#f2f4f6',
     navigationBarTextStyle: 'black',
   },
-  dependencies: {
-    BaseKit: '2.1.2',
-    DeviceKit: '2.1.6',
-    MiniKit: '2.3.0',
-    TYKit: '2.0.7',
-  },
-  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp', '@ray-js/ray-panel-wrapper/lib/page'],
-  pages: [
-    'pages/home/index',
-    'pages/tuyalink/index',
-    'pages/common/page1/index',
-    'pages/common/page2/index',
-    'pages/common/page3/index',
-    'pages/common/page4/index',
-    'pages/common/page5/index',
-    'pages/common/page6/index',
-  ],
+  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp'],
+  pages: ['pages/home/index', 'pages/common/page4/index', 'pages/common/page6/index'],
   tabBar: {},
 };

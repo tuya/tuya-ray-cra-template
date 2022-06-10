@@ -1,24 +1,25 @@
-import { useSelector } from '@/redux';
 import { Button, ScrollView, Text, View } from '@ray-js/components';
+import {
+  getSystemInfo,
+  onNetworkStatusChange,
+  offNetworkStatusChange,
+  onBluetoothAdapterStateChange,
+  offBluetoothAdapterStateChange,
+  showToast,
+  showLoading,
+  hideLoading,
+} from '@ray-js/api';
 import { router } from 'ray';
 import React from 'react';
+import { useSelector } from '@/redux';
 import styles from './index.module.less';
 
 export function Home() {
   const devInfo = useSelector(state => state.devInfo);
+
   const data = [
-    { key: 'page1', text: '查看公版子 UI 配置' },
-    { key: 'page3', text: '查看其他通用配置' },
     { key: 'page4', text: '查看路由信息' },
-    { key: 'page5', text: '网络资源支持多区域' },
     { key: 'page6', text: '设备dp点' },
-    {
-      key: 'tylink',
-      text: 'tuyalink协议设备移步至此',
-      onPress: () => {
-        router.push('/tuyalink');
-      },
-    },
     {
       key: 'getAppInfo',
       text: 'getAppInfo',
@@ -35,7 +36,7 @@ export function Home() {
       key: 'back',
       text: '获取手机信息',
       onPress: () => {
-        ty.getSystemInfo({
+        getSystemInfo({
           success: info => {
             console.log('getSystemInfo >>', info);
           },
@@ -50,30 +51,28 @@ export function Home() {
       key: 'onNetworkStatusChange',
       text: 'onNetworkStatusChange',
       onPress: () => {
-        ty.onNetworkStatusChange(res => console.log(res, 'onNetworkStatusChange'));
+        onNetworkStatusChange(res => console.log(res, 'onNetworkStatusChange'));
       },
     },
     {
       key: 'offNetworkStatusChange',
       text: 'offNetworkStatusChange',
       onPress: () => {
-        ty.offNetworkStatusChange(res => console.log(res, 'offNetworkStatusChange'));
+        offNetworkStatusChange(res => console.log(res, 'offNetworkStatusChange'));
       },
     },
     {
       key: 'onBluetoothAdapterStateChange',
       text: 'onBluetoothAdapterStateChange',
       onPress: () => {
-        ty.onBluetoothAdapterStateChange(res => console.log(res, 'onBluetoothAdapterStateChange'));
+        onBluetoothAdapterStateChange(res => console.log(res, 'onBluetoothAdapterStateChange'));
       },
     },
     {
       key: 'offBluetoothAdapterStateChange',
       text: 'offBluetoothAdapterStateChange',
       onPress: () => {
-        ty.offBluetoothAdapterStateChange(res =>
-          console.log(res, 'offBluetoothAdapterStateChange')
-        );
+        offBluetoothAdapterStateChange(res => console.log(res, 'offBluetoothAdapterStateChange'));
       },
     },
     {
@@ -152,7 +151,7 @@ export function Home() {
       key: 'Toast',
       text: 'showToast',
       onPress: () => {
-        ty.showToast({
+        showToast({
           title: '这是一个toast',
         });
       },
@@ -161,12 +160,12 @@ export function Home() {
       key: 'Loading',
       text: 'showLoading',
       onPress: () => {
-        ty.showLoading({
+        showLoading({
           title: '这是一个Loading',
         });
 
         setTimeout(() => {
-          ty.hideLoading();
+          hideLoading();
         }, 10000);
       },
     },
