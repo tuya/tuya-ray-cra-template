@@ -1,0 +1,4 @@
+export const DEV_INFO_CHANGE = '_DEVINFOCHANGE_';
+export const DEVICE_INFO_CHANGE = '_DEVICEINFOCHANGE_';
+export const RESPONSE_UPDATE_DP = 'RESPONSE_UPDATE_DP';
+export const CHANGE_DP = 'CHANGE_DP';

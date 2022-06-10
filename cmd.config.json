@@ -4,7 +4,15 @@
     "value": "app"
   },
   {
-    "name": "App 面板开发 Ray 应用",
-    "value": "ray-panel"
+    "name": "App 面板开发 Ray 应用（redux）",
+    "value": "panel-redux"
+  },
+  {
+    "name": "App 面板开发 Ray 应用（jotai）",
+    "value": "panel-jotai"
+  },
+  {
+    "name": "App 面板开发 Ray 万能面板",
+    "value": "panel-universal"
   }
 ]
