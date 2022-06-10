@@ -5,14 +5,14 @@
   },
   {
     "name": "App 面板开发 Ray 应用（redux）",
-    "value": "redux-panel"
+    "value": "panel-redux"
   },
   {
     "name": "App 面板开发 Ray 应用（jotai）",
-    "value": "jotai-panel"
+    "value": "panel-jotai"
   },
   {
-    "name": "App 面板开发 Ray 自由配置面板模板",
-    "value": "custom-config-panel"
+    "name": "App 面板开发 Ray 万能面板",
+    "value": "panel-universal"
   }
 ]
