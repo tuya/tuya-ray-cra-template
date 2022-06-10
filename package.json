@@ -1,6 +1,6 @@
 {
   "name": "@ray-js/tuya-cra-template",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "English[](README.md) | [简体中文](README_zh.md)",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
