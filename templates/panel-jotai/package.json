@@ -13,7 +13,7 @@
     "start:wechat": "ray start --target=wechat",
     "start:web": "ray start --target=web",
     "start:native": "ray start --target=native",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package --patch-dir node_modules/@ray-js/patches"
   },
   "dependencies": {
     "@ray-js/components": "latest",
@@ -27,6 +27,7 @@
     "@commitlint/cli": "^7.2.1",
     "@commitlint/config-conventional": "^9.0.1",
     "@ray-js/cli": "latest",
+    "@ray-js/patches": "latest",
     "@types/lodash": "^4.14.182",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
