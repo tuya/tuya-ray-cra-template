@@ -1,28 +1,50 @@
-import { Button, ScrollView, Text, View } from '@ray-js/components';
 import {
   getAppInfo,
-  publishDps,
   getDeviceInfo,
-  openDeviceDetailPage,
   getLangContent,
   getSystemInfo,
-  showToast,
-  showLoading,
   hideLoading,
+  openDeviceDetailPage,
   openTimerPage,
+  showLoading,
+  showToast,
 } from '@ray-js/api';
-import * as services from '@ray-js/panel-service';
-import { router, usePageEvent } from 'ray';
-import React from 'react';
-import { useAtomValue } from 'jotai';
-import { selectDevInfoAtom, selectDpStateAtom } from '@/atoms';
+import { Button, ScrollView, Text, View } from '@ray-js/components';
+
+import { kit, hooks, utils, service } from '@ray-js/panel-sdk';
+import * as baseHooks from '@ray-js/panel-sdk/lib/base/hooks';
+import * as baseUtils from '@ray-js/panel-sdk/lib/base/utils';
+import * as baseService from '@ray-js/panel-sdk/lib/base/service';
+import * as baseKit from '@ray-js/panel-sdk/lib/base/kit';
+
+import { router } from 'ray';
+import React, { useEffect } from 'react';
 import Section from '@/components/section';
 import Strings from '@/i18n';
 import styles from './index.module.less';
 
+const { useDevInfo, useDpState, usePanelConfig } = hooks;
+
+console.log('I18N', kit.I18N);
+console.log('kit', kit);
+console.log('utils', utils);
+console.log('service', service);
+console.log('hooks', hooks);
+
+console.log('baseHooks', baseHooks);
+console.log('baseUtils', baseUtils);
+console.log('baseService', baseService);
+console.log('baseKit', baseKit);
+
 export function Home() {
-  const devInfo = useAtomValue(selectDevInfoAtom);
-  const dpState = useAtomValue(selectDpStateAtom);
+  const devInfo = useDevInfo();
+
+  const [dpState, setDpState] = useDpState();
+  const panelConfig = usePanelConfig();
+
+  useEffect(() => {
+    console.log(panelConfig);
+  }, [panelConfig]);
 
   // usePageEvent('onShow', () => {
   //   console.log('=== home onShow');
@@ -47,7 +69,7 @@ export function Home() {
   const boolDpSchema = devInfo?.schema.find(data => data?.property?.type === 'bool');
 
   const data = [
-    { key: 'page-dpState', title: Strings.formatValue('checkDpState', devInfo.name) },
+    { key: 'page-dpState', title: Strings.formatValue('checkDpState', devInfo?.name) },
     { key: 'page-appState', title: '查看 App 信息' },
     { key: 'page-location', title: '查看路由信息' },
     {
@@ -63,22 +85,23 @@ export function Home() {
         const dps = {
           [boolDpSchema.id]: !dpState[boolDpSchema.code],
         };
-        publishDps({
-          deviceId: devInfo.devId,
-          dps, // {'dpid': dpValue, '2': false}
-          mode: 2,
-          pipelines: [],
-          options: {}, // 0，静音； 1，震动；2,声音； 3，震动声音
-          success: info => console.log('=== publishDps success', dps, info),
-          fail: error => console.warn('=== publishDps fail', error),
-        });
+        setDpState(dps);
+        // publishDps({
+        //   deviceId: devInfo.devId,
+        //   dps, // {'dpid': dpValue, '2': false}
+        //   mode: 2,
+        //   pipelines: [],
+        //   options: {}, // 0，静音； 1，震动；2,声音； 3，震动声音
+        //   success: info => console.log('=== publishDps success', dps, info),
+        //   fail: error => console.warn('=== publishDps fail', error),
+        // });
       },
     },
     {
       key: 'requestCloud',
       title: '调用 requestCloud 获取静态资源域名',
       onPress: async () => {
-        const assetHostname = await services.common.core.getAssetHostname();
+        const assetHostname = await service.getAssetHostname();
         console.log('assetHostname', assetHostname);
       },
     },
