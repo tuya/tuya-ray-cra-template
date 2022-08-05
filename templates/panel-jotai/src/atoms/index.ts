@@ -1,1 +1,1 @@
-export * from './devInfo';
+export * from './dpState';
