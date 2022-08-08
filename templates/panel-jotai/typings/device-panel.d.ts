@@ -79,6 +79,7 @@ type DeviceInfoUpdatedHandler = GetTTTEventListener<
 >;
 
 type DpDataChangeHandler = GetTTTEventListener<typeof import('@ray-js/api').onDpDataChange>;
+type DeviceRemovedHandler = GetTTTEventListener<typeof import('@ray-js/api').onDeviceRemoved>;
 
 type DeviceOnlineStatusUpdateHandler = GetTTTEventListener<
   typeof import('@ray-js/api').onDeviceOnlineStatusUpdate

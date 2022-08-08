@@ -1,12 +1,13 @@
-import React from 'react';
-import { useAtomValue } from 'jotai';
 import { View } from '@ray-js/components';
+import { hooks } from '@ray-js/panel-sdk';
 import { Strings } from '@ray-js/ray-panel-i18n';
-import { selectDpStateAtom } from '@/atoms';
+import React from 'react';
 import Section from '@/components/section';
 
 function PageDpState() {
-  const dpState = useAtomValue(selectDpStateAtom);
+  const [dpState] = hooks.useDpState();
+  const panelConfig = hooks.usePanelConfig();
+  console.log(panelConfig);
   return (
     <View style={{ flex: 1 }}>
       <View>

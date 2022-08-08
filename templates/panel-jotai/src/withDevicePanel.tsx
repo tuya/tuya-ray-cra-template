@@ -1,57 +1,29 @@
-import React from 'react';
-import { useSetAtom, useAtomValue } from 'jotai';
 import {
-  showToast,
-  bluetoothIsPowerOn,
-  getDeviceInfo,
-  onDeviceInfoUpdated,
-  onDpDataChange,
-  onDeviceOnlineStatusUpdate,
-  onNetworkStatusChange,
-  onBluetoothAdapterStateChange,
-  offDeviceInfoUpdated,
   offDpDataChange,
-  offDeviceOnlineStatusUpdate,
-  offNetworkStatusChange,
-  offBluetoothAdapterStateChange,
+  onDpDataChange,
+  showToast,
+  getLaunchOptionsSync,
+  registerDeviceListListener,
+  subscribeDeviceRemoved,
+  onDeviceRemoved,
+  exitMiniProgram,
 } from '@ray-js/api';
-import { initDevInfo, getDevInfo } from '@/api';
+import { hooks } from '@ray-js/panel-sdk';
+import { useAtomValue, useSetAtom } from 'jotai';
+import React from 'react';
+import { getDevInfo, initDevInfo } from '@/api';
+import { DpState, dpStateAtom, selectDpStateAtom } from '@/atoms';
 import { getDpStateMapByDevInfo, mapDpsMapToDpStateMap } from '@/utils';
-import {
-  devInfoAtom,
-  deviceOnlineAtom,
-  dpStateAtom,
-  networkAtom,
-  bluetoothAtom,
-  selectDevInfoAtom,
-  selectDpStateAtom,
-  DpState,
-} from '@/atoms';
 import Strings from './i18n';
+
+const { useDevInfo } = hooks;
 
 const withDevicePanel = (WrappedComponent: any) => {
   const PanelComponent: React.FC = props => {
-    const setDevInfo = useSetAtom(devInfoAtom);
-    const setDeviceOnline = useSetAtom(deviceOnlineAtom);
     const setDpState = useSetAtom(dpStateAtom);
-    const setNetwork = useSetAtom(networkAtom);
-    const setBluetooth = useSetAtom(bluetoothAtom);
-    const devInfo = useAtomValue(selectDevInfoAtom);
     const dpState = useAtomValue(selectDpStateAtom);
-    /**
-     * 监听设备 DP 名字和设备名字变更事件
-     */
-    const handleDeviceInfoUpdated: DeviceInfoUpdatedHandler = data => {
-      console.log('=== onDeviceInfoUpdated', data);
-      getDeviceInfo({
-        deviceId: data.deviceId,
-        success: info => {
-          console.log(`=== getDeviceInfo ${data.deviceId} success`, info);
-          setDevInfo(info as DevInfo);
-        },
-        fail: error => console.warn(`=== getDeviceInfo ${data.deviceId} fail`, error),
-      });
-    };
+    const devInfo = useDevInfo();
+
     /**
      * 监听设备上下线状态变更
      */
@@ -64,51 +36,36 @@ const withDevicePanel = (WrappedComponent: any) => {
     /**
      * 监听设备上下线状态变更
      */
-    const handleDeviceOnlineStatusUpdate: DeviceOnlineStatusUpdateHandler = data => {
-      // TODO: 真机测试验证下
-      console.log('=== onDeviceOnlineStatusUpdate', data);
-      setDeviceOnline(data);
-    };
-    /**
-     *
-     * 监听设备上下线状态变更
-     */
-    const handleNetworkStatusChange: NetworkStatusChangeHandler = data => {
-      console.log('=== onNetworkStatusChange', data);
-      setNetwork(data);
-    };
-    /**
-     * 监听蓝牙适配器状态变化事件
-     */
-    const handleBluetoothAdapterStateChange: BluetoothAdapterStateChangeHandler = data => {
-      console.log('=== onBluetoothAdapterStateChange', data);
-      setBluetooth(data);
+    const handleDeviceRemoved: DeviceRemovedHandler = data => {
+      console.log('=== onDeviceRemoved', data);
+      exitMiniProgram();
     };
 
     React.useEffect(() => {
+      // 如果已经支持基础库2.7.0. 则使用2.7.0中的方法
+      // 包含通用的设备离线逻辑、设备注册逻辑等不必再使用 global.config.ts 中配置的   pageWrapper: ['@ray-js/ray-panel-wrapper/lib/page'],
+      // @ts-ignore
+      if (ty.panel && ty.panel.initPanelKit) {
+        // @ts-ignore
+        ty.panel.initPanelKit({ deviceId: getLaunchOptionsSync().query.deviceId });
+      } else {
+        // 否则使用 registerDeviceListListener 注册，删除上述条件方法
+        // 若需要能用离线逻辑，则需要在 global.config.ts 中添加   pageWrapper: ['@ray-js/ray-panel-wrapper/lib/page'],
+        registerDeviceListListener({ deviceIdList: [getLaunchOptionsSync().query.deviceId] });
+      }
+      subscribeDeviceRemoved({
+        deviceId: getLaunchOptionsSync().query.deviceId,
+        success: () => {
+          onDeviceRemoved(handleDeviceRemoved);
+        },
+      });
       initDevInfo().then(initalDevInfo => {
         const initialDpState = getDpStateMapByDevInfo(initalDevInfo) as DpState;
-        setDevInfo(initalDevInfo);
         setDpState(initialDpState);
-        bluetoothIsPowerOn({
-          success: available => {
-            console.log('=== bluetoothIsPowerOn success', available);
-            setBluetooth({ available });
-          },
-          fail: error => console.warn('=== bluetoothIsPowerOn fail', error),
-        });
-        onDeviceInfoUpdated(handleDeviceInfoUpdated);
         onDpDataChange(handleDpDataChange);
-        onDeviceOnlineStatusUpdate(handleDeviceOnlineStatusUpdate);
-        onNetworkStatusChange(handleNetworkStatusChange);
-        onBluetoothAdapterStateChange(handleBluetoothAdapterStateChange);
       });
       return () => {
-        offDeviceInfoUpdated(handleDeviceInfoUpdated);
         offDpDataChange(handleDpDataChange);
-        offDeviceOnlineStatusUpdate(handleDeviceOnlineStatusUpdate);
-        offNetworkStatusChange(handleNetworkStatusChange);
-        offBluetoothAdapterStateChange(handleBluetoothAdapterStateChange);
       };
     }, []);
 
