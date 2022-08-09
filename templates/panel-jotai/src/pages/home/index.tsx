@@ -38,9 +38,14 @@ console.log('baseKit', baseKit);
 
 export function Home() {
   const devInfo = useDevInfo();
-
-  const [dpState, setDpState] = useDpState();
+  const [dpState, setDpState] = useDpState<SmartRobotDpState>();
   const panelConfig = usePanelConfig();
+
+  console.log('devInfo', devInfo);
+  console.log('utils', utils.rgb2hsv(255, 255, 255));
+  console.log('utils', utils.rgb2hsv(128, 1, 0));
+  console.log('utils', utils.hsv2rgb(0, 100, 100));
+  console.log('utils', utils.hex2rgbString('#FF00FF', 1));
 
   useEffect(() => {
     console.log(panelConfig);
@@ -82,8 +87,12 @@ export function Home() {
         if (!boolDpSchema) {
           return;
         }
+        // both is ok
+        // const dps = {
+        //   [boolDpSchema.id]: !dpState[boolDpSchema.code],
+        // };
         const dps = {
-          [boolDpSchema.id]: !dpState[boolDpSchema.code],
+          [boolDpSchema.code]: !dpState[boolDpSchema.code],
         };
         setDpState(dps);
         // publishDps({

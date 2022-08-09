@@ -1,22 +1,13 @@
-import {
-  offDpDataChange,
-  onDpDataChange,
-  showToast,
-  getLaunchOptionsSync,
-  registerDeviceListListener,
-  subscribeDeviceRemoved,
-  onDeviceRemoved,
-  exitMiniProgram,
-} from '@ray-js/api';
-import { hooks } from '@ray-js/panel-sdk';
+import { offDpDataChange, onDpDataChange, showToast } from '@ray-js/api';
+import { hooks, kit } from '@ray-js/panel-sdk';
 import { useAtomValue, useSetAtom } from 'jotai';
 import React from 'react';
-import { getDevInfo, initDevInfo } from '@/api';
 import { DpState, dpStateAtom, selectDpStateAtom } from '@/atoms';
 import { getDpStateMapByDevInfo, mapDpsMapToDpStateMap } from '@/utils';
 import Strings from './i18n';
 
 const { useDevInfo } = hooks;
+const { getDevInfo, initDevInfo } = kit;
 
 const withDevicePanel = (WrappedComponent: any) => {
   const PanelComponent: React.FC = props => {
@@ -33,32 +24,8 @@ const withDevicePanel = (WrappedComponent: any) => {
       const newDpState = mapDpsMapToDpStateMap(data.dps, initalDevInfo) as DpState;
       setDpState(newDpState);
     };
-    /**
-     * 监听设备上下线状态变更
-     */
-    const handleDeviceRemoved: DeviceRemovedHandler = data => {
-      console.log('=== onDeviceRemoved', data);
-      exitMiniProgram();
-    };
 
     React.useEffect(() => {
-      // 如果已经支持基础库2.7.0. 则使用2.7.0中的方法
-      // 包含通用的设备离线逻辑、设备注册逻辑等不必再使用 global.config.ts 中配置的   pageWrapper: ['@ray-js/ray-panel-wrapper/lib/page'],
-      // @ts-ignore
-      if (ty.panel && ty.panel.initPanelKit) {
-        // @ts-ignore
-        ty.panel.initPanelKit({ deviceId: getLaunchOptionsSync().query.deviceId });
-      } else {
-        // 否则使用 registerDeviceListListener 注册，删除上述条件方法
-        // 若需要能用离线逻辑，则需要在 global.config.ts 中添加   pageWrapper: ['@ray-js/ray-panel-wrapper/lib/page'],
-        registerDeviceListListener({ deviceIdList: [getLaunchOptionsSync().query.deviceId] });
-      }
-      subscribeDeviceRemoved({
-        deviceId: getLaunchOptionsSync().query.deviceId,
-        success: () => {
-          onDeviceRemoved(handleDeviceRemoved);
-        },
-      });
       initDevInfo().then(initalDevInfo => {
         const initialDpState = getDpStateMapByDevInfo(initalDevInfo) as DpState;
         setDpState(initialDpState);
