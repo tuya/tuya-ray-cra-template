@@ -1,6 +1,6 @@
 import { View } from '@ray-js/components';
 import { hooks } from '@ray-js/panel-sdk';
-import { Strings } from '@ray-js/ray-panel-i18n';
+import Strings from '@/i18n';
 import React from 'react';
 import Section from '@/components/section';
 

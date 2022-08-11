@@ -1,13 +1,14 @@
-import React from 'react';
-import { useAtomValue } from 'jotai';
 import { View } from '@ray-js/components';
 import { hooks } from '@ray-js/panel-sdk';
+import React from 'react';
 import Section from '@/components/section';
 
-const { useBluetooth, useNetwork } = hooks;
+const { useNetwork, useBluetooth } = hooks;
+
 function PageAppState() {
   const network = useNetwork();
   const bluetooth = useBluetooth();
+  console.log('bluetooth', bluetooth);
   return (
     <View style={{ flex: 1 }}>
       {Object.keys(network).map(key => {

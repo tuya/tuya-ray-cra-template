@@ -1,3 +1,5 @@
+import React from 'react';
+import { router } from 'ray';
 import {
   getAppInfo,
   getDeviceInfo,
@@ -8,43 +10,52 @@ import {
   openTimerPage,
   showLoading,
   showToast,
+  onDpDataChange,
+  offDpDataChange,
 } from '@ray-js/api';
 import { Button, ScrollView, Text, View } from '@ray-js/components';
-
-import { kit, hooks, utils, service } from '@ray-js/panel-sdk';
-import * as baseHooks from '@ray-js/panel-sdk/lib/base/hooks';
-import * as baseUtils from '@ray-js/panel-sdk/lib/base/utils';
-import * as baseService from '@ray-js/panel-sdk/lib/base/service';
-import * as baseKit from '@ray-js/panel-sdk/lib/base/kit';
-
-import { router } from 'ray';
-import React, { useEffect } from 'react';
+import { hooks, service, kit } from '@ray-js/panel-sdk';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { DpState, dpStateAtom, selectDpStateAtom } from '@/atoms';
+import { getDpStateMapByDevInfo, mapDpsMapToDpStateMap } from '@/utils';
 import Section from '@/components/section';
 import Strings from '@/i18n';
 import styles from './index.module.less';
 
 const { useDevInfo, useDpState, usePanelConfig } = hooks;
-
-console.log('I18N', kit.I18N);
-console.log('kit', kit);
-console.log('utils', utils);
-console.log('service', service);
-console.log('hooks', hooks);
-
-console.log('baseHooks', baseHooks);
-console.log('baseUtils', baseUtils);
-console.log('baseService', baseService);
-console.log('baseKit', baseKit);
+const { getDevInfo, initDevInfo } = kit;
 
 export function Home() {
   const devInfo = useDevInfo();
-
-  const [dpState, setDpState] = useDpState();
+  const [dpState, setDpState] = useDpState<SmartRobotDpState>();
   const panelConfig = usePanelConfig();
+  const setDpStateAtom = useSetAtom(dpStateAtom);
+  const dpStateInAtom = useAtomValue(selectDpStateAtom);
 
-  useEffect(() => {
+  /**
+   * 监听设备上下线状态变更
+   */
+  const handleDpDataChange: DpDataChangeHandler = data => {
+    console.log('=== onDpDataChange', data);
+    const initalDevInfo = getDevInfo();
+    const newDpState = mapDpsMapToDpStateMap(data.dps, initalDevInfo) as DpState;
+    setDpStateAtom(newDpState);
+  };
+
+  React.useEffect(() => {
+    initDevInfo().then(initalDevInfo => {
+      const initialDpState = getDpStateMapByDevInfo(initalDevInfo) as DpState;
+      setDpStateAtom(initialDpState);
+      onDpDataChange(handleDpDataChange);
+    });
+    return () => {
+      offDpDataChange(handleDpDataChange);
+    };
+  }, []);
+
+  React.useEffect(() => {
     console.log(panelConfig);
-  }, [panelConfig]);
+  }, [panelConfig.initialized]);
 
   // usePageEvent('onShow', () => {
   //   console.log('=== home onShow');
@@ -82,8 +93,12 @@ export function Home() {
         if (!boolDpSchema) {
           return;
         }
+        // both is ok
+        // const dps = {
+        //   [boolDpSchema.id]: !dpState[boolDpSchema.code],
+        // };
         const dps = {
-          [boolDpSchema.id]: !dpState[boolDpSchema.code],
+          [boolDpSchema.code]: !dpState[boolDpSchema.code],
         };
         setDpState(dps);
         // publishDps({
