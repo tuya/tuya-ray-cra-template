@@ -2,13 +2,13 @@ import React from 'react';
 import 'ray';
 import '@/i18n';
 import { kit } from '@ray-js/panel-sdk';
-import withDevicePanel from './withDevicePanel';
 
-const { getDevInfo } = kit;
+const { getDevInfo, initPanelEnvironment } = kit;
 interface Props {
   children: React.ReactNode;
 }
 
+initPanelEnvironment({ useDefaultOffline: true });
 class App extends React.Component<Props> {
   componentDidMount() {
     console.log('=== App  did mount', getDevInfo());
@@ -23,4 +23,4 @@ class App extends React.Component<Props> {
   }
 }
 
-export default withDevicePanel(App);
+export default App;
