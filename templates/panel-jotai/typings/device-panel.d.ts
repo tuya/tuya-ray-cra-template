@@ -1,3 +1,7 @@
+/**
+ * 面板小程序的通用 TS 类型
+ */
+
 /// 一些 TTT 通用工具泛型 ///
 type GetTTTAllParams<Fn> = Parameters<Fn>['0'];
 type GetTTTParams<Fn> = Omit<GetTTTAllParams<Fn>, 'complete' | 'success' | 'fail'>;
@@ -67,7 +71,12 @@ interface DpSchema {
 /**
  * 设备信息
  */
-type DevInfo = Omit<ty.device.DeviceInfo, 'schema'> & { schema: DpSchema[] };
+type DevInfo = Omit<ty.device.DeviceInfo, 'schema' | 'panelConfig'> & {
+  schema: DpSchema[];
+  idCodes: Record<string, string>;
+  codeIds: Record<string, string>;
+  panelConfig: PanelConfig;
+};
 
 /**
  * 设备物模型信息

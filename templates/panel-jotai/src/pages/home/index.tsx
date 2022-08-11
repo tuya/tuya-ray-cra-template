@@ -1,28 +1,61 @@
-import { Button, ScrollView, Text, View } from '@ray-js/components';
+import React from 'react';
+import { router } from 'ray';
 import {
   getAppInfo,
-  publishDps,
   getDeviceInfo,
-  openDeviceDetailPage,
   getLangContent,
   getSystemInfo,
-  showToast,
-  showLoading,
   hideLoading,
+  openDeviceDetailPage,
   openTimerPage,
+  showLoading,
+  showToast,
+  onDpDataChange,
+  offDpDataChange,
 } from '@ray-js/api';
-import * as services from '@ray-js/panel-service';
-import { router, usePageEvent } from 'ray';
-import React from 'react';
-import { useAtomValue } from 'jotai';
-import { selectDevInfoAtom, selectDpStateAtom } from '@/atoms';
+import { Button, ScrollView, Text, View } from '@ray-js/components';
+import { hooks, service, kit } from '@ray-js/panel-sdk';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { DpState, dpStateAtom, selectDpStateAtom } from '@/atoms';
+import { getDpStateMapByDevInfo, mapDpsMapToDpStateMap } from '@/utils';
 import Section from '@/components/section';
 import Strings from '@/i18n';
 import styles from './index.module.less';
 
+const { useDevInfo, useDpState, usePanelConfig } = hooks;
+const { getDevInfo, initDevInfo } = kit;
+
 export function Home() {
-  const devInfo = useAtomValue(selectDevInfoAtom);
-  const dpState = useAtomValue(selectDpStateAtom);
+  const devInfo = useDevInfo();
+  const [dpState, setDpState] = useDpState<SmartRobotDpState>();
+  const panelConfig = usePanelConfig();
+  const setDpStateAtom = useSetAtom(dpStateAtom);
+  const dpStateInAtom = useAtomValue(selectDpStateAtom);
+
+  /**
+   * 监听设备上下线状态变更
+   */
+  const handleDpDataChange: DpDataChangeHandler = data => {
+    console.log('=== onDpDataChange', data);
+    const initalDevInfo = getDevInfo();
+    const newDpState = mapDpsMapToDpStateMap(data.dps, initalDevInfo) as DpState;
+    setDpStateAtom(newDpState);
+  };
+
+  React.useEffect(() => {
+    initDevInfo().then(initalDevInfo => {
+      const initialDpState = getDpStateMapByDevInfo(initalDevInfo) as DpState;
+      setDpStateAtom(initialDpState);
+      onDpDataChange(handleDpDataChange);
+    });
+    return () => {
+      offDpDataChange(handleDpDataChange);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    console.log(panelConfig);
+  }, [panelConfig.initialized]);
 
   // usePageEvent('onShow', () => {
   //   console.log('=== home onShow');
@@ -47,7 +80,7 @@ export function Home() {
   const boolDpSchema = devInfo?.schema.find(data => data?.property?.type === 'bool');
 
   const data = [
-    { key: 'page-dpState', title: Strings.formatValue('checkDpState', devInfo.name) },
+    { key: 'page-dpState', title: Strings.formatValue('checkDpState', devInfo?.name) },
     { key: 'page-appState', title: '查看 App 信息' },
     { key: 'page-location', title: '查看路由信息' },
     {
@@ -60,25 +93,30 @@ export function Home() {
         if (!boolDpSchema) {
           return;
         }
+        // both is ok
+        // const dps = {
+        //   [boolDpSchema.id]: !dpState[boolDpSchema.code],
+        // };
         const dps = {
-          [boolDpSchema.id]: !dpState[boolDpSchema.code],
+          [boolDpSchema.code]: !dpState[boolDpSchema.code],
         };
-        publishDps({
-          deviceId: devInfo.devId,
-          dps, // {'dpid': dpValue, '2': false}
-          mode: 2,
-          pipelines: [],
-          options: {}, // 0，静音； 1，震动；2,声音； 3，震动声音
-          success: info => console.log('=== publishDps success', dps, info),
-          fail: error => console.warn('=== publishDps fail', error),
-        });
+        setDpState(dps);
+        // publishDps({
+        //   deviceId: devInfo.devId,
+        //   dps, // {'dpid': dpValue, '2': false}
+        //   mode: 2,
+        //   pipelines: [],
+        //   options: {}, // 0，静音； 1，震动；2,声音； 3，震动声音
+        //   success: info => console.log('=== publishDps success', dps, info),
+        //   fail: error => console.warn('=== publishDps fail', error),
+        // });
       },
     },
     {
       key: 'requestCloud',
       title: '调用 requestCloud 获取静态资源域名',
       onPress: async () => {
-        const assetHostname = await services.common.core.getAssetHostname();
+        const assetHostname = await service.getAssetHostname();
         console.log('assetHostname', assetHostname);
       },
     },
