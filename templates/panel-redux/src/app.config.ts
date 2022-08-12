@@ -16,7 +16,6 @@ export const tuya = {
     navigationBarBackgroundColor: '#f2f4f6',
     navigationBarTextStyle: 'black',
   },
-  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp'],
   pages: ['pages/home/index', 'pages/common/page4/index', 'pages/common/page6/index'],
   tabBar: {},
 };

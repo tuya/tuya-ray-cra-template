@@ -9,13 +9,16 @@ import {
   showLoading,
   hideLoading,
 } from '@ray-js/api';
+import { hooks } from '@ray-js/panel-sdk';
 import { router } from 'ray';
 import React from 'react';
 import { useSelector } from '@/redux';
 import styles from './index.module.less';
 
+const { useDevInfo } = hooks;
 export function Home() {
-  const devInfo = useSelector(state => state.devInfo);
+  // const devInfo = useSelector(state => state.devInfo);
+  const devInfo = useDevInfo();
 
   const data = [
     { key: 'page4', text: '查看路由信息' },

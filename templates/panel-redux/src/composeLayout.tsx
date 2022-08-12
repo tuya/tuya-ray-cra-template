@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { initDevInfo } from '@/api';
-import { actions, store } from '@/redux';
-import { ReduxState } from '@/redux/store';
-import { Theme } from '@ray-js/ray-panel-theme';
 import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
+import { Theme } from '@ray-js/ray-panel-theme';
+import { kit } from '@ray-js/panel-sdk';
+import { actions, store } from '@/redux';
+import { ReduxState } from '@/redux/store';
 
+const { initDevInfo } = kit;
 interface Props {
   devInfo: DevInfo;
   // eslint-disable-next-line react/require-default-props
