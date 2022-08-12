@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { Component } from 'react';
-import { connect, Provider } from 'react-redux';
-import { Theme } from '@ray-js/ray-panel-theme';
+import { Provider } from 'react-redux';
 import { kit } from '@ray-js/panel-sdk';
 import { actions, store } from '@/redux';
-import { ReduxState } from '@/redux/store';
 
 const { initDevInfo } = kit;
 interface Props {
@@ -20,7 +18,6 @@ interface State {
 }
 
 const composeLayout = (Comp: React.ComponentType<any>) => {
-  const ThemeContainer = connect((props: ReduxState) => ({ theme: props.theme }))(Theme);
   const { dispatch } = store;
   return class PanelComponent extends Component<Props, State> {
     constructor(props) {
@@ -69,9 +66,7 @@ const composeLayout = (Comp: React.ComponentType<any>) => {
 
       return (
         <Provider store={store}>
-          <ThemeContainer>
-            {devInfo && <Comp devInfo={devInfo} extraInfo={extraInfo} {...this.props} />}
-          </ThemeContainer>
+          {devInfo && <Comp devInfo={devInfo} extraInfo={extraInfo} {...this.props} />}
         </Provider>
       );
     }
