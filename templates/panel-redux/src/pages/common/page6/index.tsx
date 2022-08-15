@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, Text } from '@ray-js/components';
-import { Strings } from '@ray-js/ray-panel-i18n';
+import { hooks } from '@ray-js/panel-sdk';
+import Strings from '@/i18n';
 import { useSelector } from '@/redux';
+
+const { useDpState } = hooks;
 
 function Page10() {
   const devInfo = useSelector(state => state.devInfo);
-  const dpState = useSelector(state => state.dpState);
+  // const dpState = useSelector(state => state.dpState);
+  const [dpState] = useDpState();
   console.log(devInfo, dpState);
 
   return (

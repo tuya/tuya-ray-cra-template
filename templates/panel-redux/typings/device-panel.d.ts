@@ -1,4 +1,4 @@
-import { getDeviceInfo, getDeviceThingModelInfo, DeviceInfo } from '@ray-js/api';
+import { getDeviceInfo, getDeviceThingModelInfo } from '@ray-js/api';
 /**
  * 面板小程序的通用 TS 类型
  */

@@ -8,14 +8,23 @@ import {
   showToast,
   showLoading,
   hideLoading,
+  getAppInfo,
+  bluetoothIsPowerOn,
+  publishDps,
+  getDeviceInfo,
+  openDeviceDetailPage,
+  openTimerPage,
 } from '@ray-js/api';
+import { hooks } from '@ray-js/panel-sdk';
 import { router } from 'ray';
 import React from 'react';
 import { useSelector } from '@/redux';
 import styles from './index.module.less';
 
+const { useDevInfo } = hooks;
 export function Home() {
-  const devInfo = useSelector(state => state.devInfo);
+  // const devInfo = useSelector(state => state.devInfo);
+  const devInfo = useDevInfo();
 
   const data = [
     { key: 'page4', text: '查看路由信息' },
@@ -24,7 +33,7 @@ export function Home() {
       key: 'getAppInfo',
       text: 'getAppInfo',
       onPress: () => {
-        ty.getAppInfo({
+        getAppInfo({
           success: info => {
             console.log(info);
           },
@@ -79,7 +88,7 @@ export function Home() {
       key: 'gotoDpAlarm',
       text: 'gotoDpAlarm',
       onPress: () => {
-        ty.device.openTimerPage({
+        openTimerPage({
           deviceId: devInfo.devId,
           category: 'schedule',
           data: [
@@ -98,7 +107,7 @@ export function Home() {
       key: 'bluetoothIsPowerOn',
       text: 'bluetoothIsPowerOn',
       onPress: () => {
-        ty.device.bluetoothIsPowerOn({
+        bluetoothIsPowerOn({
           success: res => console.log(res, 'success'),
           fail: res => console.log(res, 'fail'),
         });
@@ -108,7 +117,7 @@ export function Home() {
       key: '下发dp点',
       text: '下发dp点',
       onPress: () => {
-        ty.device.publishDps({
+        publishDps({
           deviceId: devInfo.devId,
           dps: { '1': true, '2': false }, // {'dpid': dpValue, '2': false}
           mode: 2,
@@ -125,7 +134,7 @@ export function Home() {
       key: 'getDeviceInfo',
       text: 'getDeviceInfo',
       onPress: () => {
-        ty.device.getDeviceInfo({
+        getDeviceInfo({
           deviceId: devInfo.devId,
           success: info => {
             console.log(info);
@@ -139,7 +148,7 @@ export function Home() {
       text: '去设备详情',
       onPress: () => {
         const { devId, groupId } = devInfo;
-        ty.device.openDeviceDetailPage({
+        openDeviceDetailPage({
           deviceId: devId,
           groupId,
           success: () => console.log('success'),

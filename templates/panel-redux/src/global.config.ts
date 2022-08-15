@@ -25,8 +25,6 @@ export const native = {
     backgroundColorTop: 'red',
     navigationStyle: 'custom',
   },
-  pageWrapper: ['@ray-js/ray-panel-wrapper/lib/page'],
-
   dependencies: {
     BaseKit: '2.1.2',
     DeviceKit: '2.1.6',
@@ -42,7 +40,6 @@ export const tuya = {
     navigationBarBackgroundColor: '#f2f4f6',
     navigationBarTextStyle: 'black',
   },
-  pageWrapper: ['@ray-js/ray-components-plus/lib/CommonWrp'],
 };
 
 const globalConfig: GlobalConfig = {

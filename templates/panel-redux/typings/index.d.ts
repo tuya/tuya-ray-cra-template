@@ -14,26 +14,3 @@ declare global {
     __DEV__: boolean;
   }
 }
-
-/// 一些 TTT 通用工具泛型 ///
-type GetTTTAllParams<Fn> = Parameters<Fn>['0'];
-type GetTTTParams<Fn> = Omit<GetTTTAllParams<Fn>, 'complete' | 'success' | 'fail'>;
-type GetTTTCompleteData<Fn> = Parameters<GetTTTAllParams<Fn>['complete']>['0'];
-type GetTTTSuccessData<Fn> = Parameters<GetTTTAllParams<Fn>['success']>['0'];
-type GetTTTFailData<Fn> = Parameters<GetTTTAllParams<Fn>['fail']>['0'];
-///                   ///
-
-/**
- * TTT 方法统一错误码
- */
-type TTTCommonErrorCode = GetTTTFailData<typeof ty.device.getDeviceInfo>;
-
-/**
- * 设备信息
- */
-type DevInfo = ty.device.DeviceInfo;
-
-/**
- * 设备物模型信息
- */
-type ThingModelInfo = GetTTTSuccessData<typeof ty.device.getDeviceThingModelInfo>;
