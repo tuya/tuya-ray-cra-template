@@ -1,3 +1,4 @@
+import { getDeviceInfo, getDeviceThingModelInfo, DeviceInfo } from '@ray-js/api';
 /**
  * 面板小程序的通用 TS 类型
  */
@@ -15,7 +16,7 @@ type GetTTTEventListenerParams<Fn> = Parameters<GetTTTEventListener<Fn>>['0'];
 /**
  * TTT 方法统一错误码
  */
-type TTTCommonErrorCode = GetTTTFailData<typeof ty.device.getDeviceInfo>;
+type TTTCommonErrorCode = GetTTTFailData<typeof getDeviceInfo>;
 
 /**
  * 功能点描述信息
@@ -68,10 +69,12 @@ interface DpSchema {
   type: string;
 }
 
+type DeviceInfo = GetTTTSuccessData<typeof getDeviceInfo>;
+
 /**
  * 设备信息
  */
-type DevInfo = Omit<ty.device.DeviceInfo, 'schema' | 'panelConfig'> & {
+type DevInfo = Omit<DeviceInfo, 'schema' | 'panelConfig'> & {
   schema: DpSchema[];
   idCodes: Record<string, string>;
   codeIds: Record<string, string>;
@@ -81,7 +84,7 @@ type DevInfo = Omit<ty.device.DeviceInfo, 'schema' | 'panelConfig'> & {
 /**
  * 设备物模型信息
  */
-type ThingModelInfo = GetTTTSuccessData<typeof ty.device.getDeviceThingModelInfo>;
+type ThingModelInfo = GetTTTSuccessData<typeof getDeviceThingModelInfo>;
 
 type DeviceInfoUpdatedHandler = GetTTTEventListener<
   typeof import('@ray-js/api').onDeviceInfoUpdated
