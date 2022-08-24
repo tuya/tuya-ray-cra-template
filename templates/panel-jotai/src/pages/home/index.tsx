@@ -14,7 +14,7 @@ import {
   offDpDataChange,
 } from '@ray-js/api';
 import { Button, ScrollView, Text, View } from '@ray-js/components';
-import { hooks, service, kit } from '@ray-js/panel-sdk';
+import { hooks, kit } from '@ray-js/panel-sdk';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { DpState, dpStateAtom, selectDpStateAtom } from '@/atoms';
 import { getDpStateMapByDevInfo, mapDpsMapToDpStateMap } from '@/utils';
@@ -110,14 +110,6 @@ export function Home() {
         //   success: info => console.log('=== publishDps success', dps, info),
         //   fail: error => console.warn('=== publishDps fail', error),
         // });
-      },
-    },
-    {
-      key: 'requestCloud',
-      title: '调用 requestCloud 获取静态资源域名',
-      onPress: async () => {
-        const assetHostname = await service.getAssetHostname();
-        console.log('assetHostname', assetHostname);
       },
     },
     {
