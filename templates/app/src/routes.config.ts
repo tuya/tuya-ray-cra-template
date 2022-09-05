@@ -11,6 +11,11 @@ export const routes: Routes = [
     route: '/detail/:uid',
     path: '/pages/detail/index',
   },
+  {
+    id: 'my',
+    route: '/my',
+    path: '/pages/my/index',
+  },
 ];
 
 export const tabBar: TabBar = {

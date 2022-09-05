@@ -14,14 +14,6 @@ export default function Home() {
           </View>
         );
       })}
-
-      <Button
-        onClick={() => {
-          router.push(`/detail/${Date.now()}`);
-        }}
-      >
-        详情页
-      </Button>
     </View>
   );
 }
