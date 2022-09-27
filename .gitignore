@@ -1,4 +1,5 @@
+app.config.ts
 node_modules
 .ray
 dist
-./src/app.config.ts
+yarn.lock
