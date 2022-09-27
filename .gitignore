@@ -1,0 +1,5 @@
+app.config.ts
+node_modules
+.ray
+dist
+yarn.lock

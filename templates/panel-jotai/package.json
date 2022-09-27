@@ -17,12 +17,8 @@
     "start:native": "ray start --target=native"
   },
   "dependencies": {
-    "@ray-js/components": "latest",
-    "@ray-js/framework": "latest",
-    "@ray-js/api": "latest",
-    "@ray-js/router": "latest",
+    "@ray-js/ray": "latest",
     "@ray-js/panel-sdk": "latest",
-    "@ray-js/router-mp": "latest",
     "fast-deep-equal": "^3.1.3",
     "jotai": "^1.7.0",
     "lodash": "^4.17.21",
