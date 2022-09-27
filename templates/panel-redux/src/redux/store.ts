@@ -14,7 +14,8 @@ export type ReduxState = { [K in keyof Reducers]: ReturnType<Reducers[K]> };
 
 export const rootReducers = combineReducers(reducers);
 
-const isDebuggingInChrome = process.env.NODE_ENV !== 'production';
+const isDebuggingInChrome =
+  process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
 const logger = createLogger({
   predicate: () => isDebuggingInChrome,
   collapsed: true,
