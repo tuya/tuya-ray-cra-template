@@ -24,7 +24,6 @@
     "start:tuya": "ray start --target=tuya",
     "start:wechat": "ray start --target=wechat",
     "start:web": "ray start --target=web",
-    "start:native": "ray start --target=native",
-    "postinstall": "patch-package --patch-dir node_modules/@ray-js/patches"
+    "start:native": "ray start --target=native"
   }
 }
