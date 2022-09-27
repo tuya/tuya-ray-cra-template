@@ -1,4 +1,4 @@
 node_modules
 .ray
 dist
-./src/app.config.ts
+app.config.ts

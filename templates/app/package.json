@@ -12,9 +12,7 @@
     "webpack-chain": "^6.5.1"
   },
   "dependencies": {
-    "@ray-js/components": "latest",
-    "@ray-js/framework": "latest",
-    "@ray-js/types": "latest"
+    "@ray-js/ray": "latest"
   },
   "scripts": {
     "build:tuya": "ray build --target=tuya",
