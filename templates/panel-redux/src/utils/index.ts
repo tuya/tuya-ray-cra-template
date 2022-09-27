@@ -1,6 +1,7 @@
 import Strings from '@/i18n';
 import { store } from '@/redux';
-import { NumberUtils } from '@ray-js/ray-panel-utils';
+import { utils } from '@ray-js/panel-sdk';
+const { getBitValue } = utils;
 
 export const getFaultStrings = (
   faultCode: string,
@@ -13,7 +14,7 @@ export const getFaultStrings = (
   const labels = [];
   for (let i = 0; i < label!.length; i++) {
     const value = label![i];
-    const isExist = NumberUtils.getBitValue(faultValue, i);
+    const isExist = getBitValue(faultValue, i);
     if (isExist) {
       labels.push(Strings.getDpLang(faultCode, value));
       if (onlyPrior) break;
