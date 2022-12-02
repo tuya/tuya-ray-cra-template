@@ -15,7 +15,7 @@
     "noEmitOnError": false,
     "jsx": "react",
     "paths": {
-      "ray": ["./.ray"],
+      "ray": ["./node_modules/@ray-js/ray"],
       "@/*": ["./src/*"]
     }
   },

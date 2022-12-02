@@ -20,7 +20,7 @@
     "baseUrl": "./",
     "paths": {
       "ray": [
-        "./.ray"
+        "./node_modules/@ray-js/ray"
       ],
       "@/*": [
         "./src/*"
