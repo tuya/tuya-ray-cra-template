@@ -1,0 +1,73 @@
+page {
+  background-color: #f8f8f8;
+}
+.lastBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  color: #666;
+  font-size: 14px;
+  line-height: 28px;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+}
+.lastTitle {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.success {
+  background-color: cyan;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 16px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translate(10%, -10%);
+  }
+}
+
+.modules {
+  background-color: #fff;
+  border-radius: 8px;
+  margin: 16px;
+
+  .module {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+
+    .title {
+      font-size: 14px;
+      color: #666;
+    }
+    .upgradeDesc {
+      color: #fff;
+      background-color: gray;
+      border-radius: 4px;
+      font-size: 10px;
+      padding: 8px;
+    }
+    .upgradeBtn {
+      color: #fff;
+      background-color: cyan;
+      border-radius: 4px;
+      font-size: 10px;
+      padding: 8px;
+    }
+  }
+}

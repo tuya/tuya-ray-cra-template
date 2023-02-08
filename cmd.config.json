@@ -10,5 +10,9 @@
   {
     "name": "App 面板开发 Ray 应用（jotai）",
     "value": "panel-jotai"
+  },
+  {
+    "name": "微信小程序开发 Ray 应用",
+    "value": "wechat"
   }
 ]

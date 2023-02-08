@@ -1,0 +1,18 @@
+{
+  "id": "",
+  "name": "ray-wechat-demo",
+  "path": "/Users/shinylee/project/energy",
+  "type": "panel-app",
+  "ownerType": "tuya-official",
+  "i18n": false,
+  "description": "项目描述",
+  "miniprogramRoot": "./dist/tuya",
+  "dependencies": {
+    "BaseKit": "3.0.0",
+    "MiniKit": "3.0.2",
+    "DeviceKit": "3.0.2",
+    "BizKit": "3.0.1"
+  },
+  "productId": "gco77hex2vzk33fs",
+  "baseversion": "2.10.8"
+}
