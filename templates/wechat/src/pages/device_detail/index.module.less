@@ -1,0 +1,52 @@
+page {
+  background-color: #f8f8f8;
+}
+.container {
+}
+
+.nameBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px 0;
+}
+.icon {
+  width: 48px;
+  height: 48px;
+  margin-right: 16px;
+}
+
+.removeBtn {
+  color: red !important;
+  font-size: 14px !important;
+  font-weight: 200 !important;
+  padding: 16px !important;
+}
+
+.new {
+  &::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: red;
+  }
+}
+
+.selections {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  .item {
+    padding: 16px;
+    text-align: center;
+  }
+}
+
+.ota {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
