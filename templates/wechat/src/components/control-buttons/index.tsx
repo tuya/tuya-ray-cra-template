@@ -8,7 +8,6 @@ import {
 } from '@ray-js/ray';
 import {
   isLogin,
-  init,
   connectMqtt,
   getFamilies,
   getDeviceList,
@@ -18,10 +17,6 @@ import React, { FC, useCallback, useState } from 'react';
 import { initDevice } from '../../devices';
 import styles from './index.module.less';
 import Devices from './devices';
-
-init({
-  schema: '1a44705c1c5c477b92ba51d21ec342d1',
-});
 
 // 获取家庭下的设备
 const fetchDevices = async () => {
