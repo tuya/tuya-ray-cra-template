@@ -5,14 +5,17 @@
   },
   {
     "name": "App 面板开发 Ray 应用（redux）",
-    "value": "panel-redux"
+    "value": "panel-redux",
+    "hidden": true
   },
   {
     "name": "App 面板开发 Ray 应用（jotai）",
-    "value": "panel-jotai"
+    "value": "panel-jotai",
+    "hidden": true
   },
   {
     "name": "微信小程序开发 Ray 应用",
-    "value": "wechat"
+    "value": "wechat",
+    "hidden": true
   }
 ]
