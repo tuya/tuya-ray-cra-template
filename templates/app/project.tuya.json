@@ -4,6 +4,7 @@
   "description": "项目描述",
   "baseversion": "2.0.32",
   "miniprogramRoot": "./dist/tuya",
+  "devMode": "ray",
   "dependencies": {
     "BaseKit": "2.1.2",
     "MiniKit": "2.3.7",

@@ -3,3 +3,4 @@ node_modules
 .ray
 dist
 yarn.lock
+.idea

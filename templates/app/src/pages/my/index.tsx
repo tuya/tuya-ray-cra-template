@@ -1,7 +1,6 @@
-import { router, location } from 'ray';
 import React from 'react';
 
-import { Button, View, Text } from '@ray-js/components';
+import { Button, View, Text, router, location  } from '@ray-js/ray';
 
 import styles from './index.module.less';
 

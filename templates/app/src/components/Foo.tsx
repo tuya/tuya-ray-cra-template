@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text } from '@ray-js/components';
-import { withPageLifecycle, router } from 'ray';
+import { withPageLifecycle, router, View, Text } from '@ray-js/ray';
 
 const CustomContext = React.createContext({
   foo: 'bar',

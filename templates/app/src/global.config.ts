@@ -4,19 +4,19 @@ export const wechat = {
   window: {
     backgroundColor: '#f2f4f6',
     navigationBarTitleText: 'Ray Template',
-    navigationBarBackgroundColor: '#ff592a',
-  },
+    navigationBarBackgroundColor: '#ff592a'
+  }
 };
 
 export const web = {
   window: {
     backgroundColor: '#f2f4f6',
-    navigationBarTitleText: 'Ray Web App',
-  },
+    navigationBarTitleText: 'Ray Web App'
+  }
 };
 
 const globalConfig: GlobalConfig = {
-  basename: '',
+  basename: ''
 };
 
 export default globalConfig;
