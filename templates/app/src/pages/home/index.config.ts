@@ -5,3 +5,8 @@ export const web = {
 export const wechat = {
   navigationBarTitleText: 'Ray 首页',
 };
+
+
+export const tuya = {
+  navigationBarTitleText: 'Ray 首页',
+};

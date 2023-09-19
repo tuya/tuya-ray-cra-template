@@ -4,18 +4,18 @@ export const routes: Routes = [
   {
     id: 'home',
     route: '/',
-    path: '/pages/home/index',
+    path: '/pages/home/index'
   },
   {
     id: 'detail',
     route: '/detail/:uid',
-    path: '/pages/detail/index',
+    path: '/pages/detail/index'
   },
   {
     id: 'my',
     route: '/my',
-    path: '/pages/my/index',
-  },
+    path: '/pages/my/index'
+  }
 ];
 
 export const tabBar: TabBar = {
@@ -26,7 +26,7 @@ export const tabBar: TabBar = {
       id: 'home',
       text: '首页',
       icon: '/tabBar/home.png',
-      activeIcon: '/tabBar/home-active.png',
-    },
-  ],
+      activeIcon: '/tabBar/home-active.png'
+    }
+  ]
 };
