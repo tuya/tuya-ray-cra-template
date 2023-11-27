@@ -7,11 +7,11 @@
   "scripts": {
     "watch": "ray start --target=tuya",
     "build:tuya": "ray build --target=tuya",
-    "build:wechat": "ray build --target=wechat",
+    "build:wechat": "ray build --target=wechat --bundler=webpack",
     "build:web": "ray build --target=web",
     "build:native": "ray build --target=native",
     "start:tuya": "ray start --target=tuya",
-    "start:wechat": "ray start --target=wechat",
+    "start:wechat": "ray start --target=wechat --bundler=webpack",
     "start:web": "ray start --target=web",
     "start:native": "ray start --target=native"
   },
