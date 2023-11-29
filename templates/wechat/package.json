@@ -15,10 +15,12 @@
     "start:web": "ray start --target=web",
     "start:native": "ray start --target=native"
   },
+  "resolutions": {
+    "@ray-js/wechat": "latest"
+  },
   "dependencies": {
     "@ray-js/components-ty-actionsheet": "latest",
     "@ray-js/components-ty-cell": "latest",
-    "@ray-js/components-ty-slider": "latest",
     "@ray-js/components-ty-switch": "latest",
     "@ray-js/countdown-action-sheet": "latest",
     "@ray-js/panel-sdk": "latest",
